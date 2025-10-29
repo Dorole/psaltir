@@ -1,7 +1,7 @@
 # 📖 PSALTIR
 
 ![Flutter](https://img.shields.io/badge/Flutter-3.35-blue?logo=flutter)
-![Stars](https://img.shields.io/github/stars/yourusername/my_flutter_app?style=social)
+![Stars](https://img.shields.io/github/stars/Dorole/psaltir?style=social)
 
 My first Flutter app built with [Flutter](https://flutter.dev) and Dart.
 

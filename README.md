@@ -17,7 +17,7 @@ To run this project locally:
 
 ```bash
 git clone https://github.com/Dorole/psaltir.git
-cd my_flutter_app
+cd psaltir
 flutter pub get
 flutter run
 ```

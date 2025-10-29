@@ -1,16 +1,23 @@
-# psaltir
+# 📖 PSALTIR
 
-A new Flutter project.
+![Flutter](https://img.shields.io/badge/Flutter-3.35-blue?logo=flutter)
+![Stars](https://img.shields.io/github/stars/yourusername/my_flutter_app?style=social)
 
-## Getting Started
+My first Flutter app built with [Flutter](https://flutter.dev) and Dart.
 
-This project is a starting point for a Flutter application.
+📲 The aim is to have a minimalist, user-friendly reading app that will let the user choose the reading mode, store their favorite psalms and read them on the go. The content will be available in Croatian.
 
-A few resources to get you started if this is your first Flutter project:
+📲 My plan is to try and get it on Play Store and App Store.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+📝 See the [CHANGELOG](CHANGELOG.md) for a detailed history of changes.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 🧰 Getting Started
+
+To run this project locally:
+
+```bash
+git clone https://github.com/Dorole/psaltir.git
+cd my_flutter_app
+flutter pub get
+flutter run
+```

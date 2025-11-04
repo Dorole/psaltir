@@ -1,27 +1,8 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
-
-enum ReadingChoice { category, number, random }
-
-typedef CategoryEntry = DropdownMenuEntry<Category>;
-
-enum Category {
-  praise("Slavljenički"),
-  repent("Pokajnički"),
-  lament("Tužbalice");
-
-  const Category(this.label);
-  final String label;
-  // potencijalno dodaj ikonu
-
-  static final List<CategoryEntry> entries =
-      UnmodifiableListView<CategoryEntry>(
-        values.map<CategoryEntry>(
-          (Category category) =>
-              CategoryEntry(value: category, label: category.label),
-        ),
-      );
-}
+import 'package:provider/provider.dart';
+import 'package:psaltir/pages/reading_page.dart';
+import '../providers/reading_provider.dart';
+import '../models/reading_models.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,12 +28,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _onSubmitPressed() {
+    final readingProvider = context.read<ReadingProvider>();
+    bool navigate = false;
+
     if (!_chooseByCategory && !_chooseByNumber) {
-      setState(() {
-        _readingChoice = ReadingChoice.random;
-      });
+      readingProvider.setReadingOptions(readingChoice: ReadingChoice.random);
       _showMessage("[Otvaram nasumični psalam.]");
-      return;
+      navigate = true;
     }
 
     if (_chooseByCategory) {
@@ -60,7 +42,12 @@ class _HomePageState extends State<HomePage> {
           ? "Kategorija redom"
           : "Kategorija nasumično";
       _showMessage("$message: ${_selectedCategory?.label}");
-      return;
+      readingProvider.setReadingOptions(
+        readingChoice: _readingChoice,
+        selectedCategory: _selectedCategory,
+        categoryInOrder: _categoryInOrder,
+      );
+      navigate = true;
     }
 
     if (_chooseByNumber) {
@@ -74,9 +61,21 @@ class _HomePageState extends State<HomePage> {
           _showMessage("Broj psalma mora biti između 1 i 150.");
           return;
         } else {
+          readingProvider.setReadingOptions(
+            readingChoice: _readingChoice,
+            psalmNumber: psalmNumber,
+          );
           _showMessage("[OTVARAM PSALAM $psalmNumber]");
+          navigate = true;
         }
       }
+    }
+
+    if (navigate) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const ReadingPage()),
+      );
     }
   }
 

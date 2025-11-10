@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psaltir/pages/reading_page.dart';
+import 'package:psaltir/providers/navigation_provider.dart';
 import '../providers/reading_provider.dart';
 import '../models/reading_models.dart';
 
@@ -17,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   bool _categoryInOrder = false;
   ReadingChoice? _readingChoice;
   Category? _selectedCategory;
+  final Category _defaultCategory = Category.praise;
   final TextEditingController _categoryController = TextEditingController();
   final TextEditingController _inputController = TextEditingController();
 
@@ -29,28 +30,30 @@ class _HomePageState extends State<HomePage> {
 
   void _onSubmitPressed() {
     final readingProvider = context.read<ReadingProvider>();
+    final navProvider = context.read<NavigationProvider>();
     bool navigate = false;
 
-    if (!_chooseByCategory && !_chooseByNumber) {
+    // ***** RANDOM *****
+    if (_readingChoice == null) {
       readingProvider.setReadingOptions(readingChoice: ReadingChoice.random);
       _showMessage("[Otvaram nasumični psalam.]");
       navigate = true;
     }
-
-    if (_chooseByCategory) {
+    // ***** CATEGORY *****
+    else if (_chooseByCategory) {
       final message = _categoryInOrder
           ? "Kategorija redom"
           : "Kategorija nasumično";
       _showMessage("$message: ${_selectedCategory?.label}");
       readingProvider.setReadingOptions(
         readingChoice: _readingChoice,
-        selectedCategory: _selectedCategory,
+        selectedCategory: _selectedCategory ?? _defaultCategory,
         categoryInOrder: _categoryInOrder,
       );
       navigate = true;
     }
-
-    if (_chooseByNumber) {
+    // ***** NUMBER *****
+    else {
       final text = _inputController.text.trim();
       if (text.isEmpty) {
         _showMessage("Upišite broj psalma (1 - 150)");
@@ -72,10 +75,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (navigate) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => const ReadingPage()),
-      );
+      navProvider.openReadingPage();
     }
   }
 

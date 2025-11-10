@@ -4,10 +4,25 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-10
+
+- Refactored MainPage so it can display pages that are not accessible from the bottom navigation bar
+- Introduced Navigation Provider and refactored HomePage accordingly
+- Hooked up ReadingPage with ReadingProvider so it reads the data from it
+
+📋 TO DO:
+
+- Switch bottom navBar for a regular row with icons buttons for more control
+
 ### 2025-11-04
 
 - Refactored HomePage logic into a Provider (initial implementation): moved shared data into Reading Provider, moved enums from HomePage to Reading Models
 - Implemented initial navigation to Reading Page.
+
+📋 TO DO:
+
+- implement the category case in getNextPsalm() in ReadingProvider
+- save psalms from the same sessions so they don't repeat in random mode
 
 ### 2025-10-28
 

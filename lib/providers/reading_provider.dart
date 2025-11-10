@@ -8,6 +8,11 @@ class ReadingProvider extends ChangeNotifier {
   int? _psalmNumber;
   bool _categoryInOrder = false;
 
+  // ***** DEBUG *****
+  ReadingChoice? get readingChoice => _readingChoice;
+  Category? get category => _selectedCategory;
+  int? get psalmNumber => _psalmNumber;
+
   void setReadingOptions({
     ReadingChoice? readingChoice,
     Category? selectedCategory,

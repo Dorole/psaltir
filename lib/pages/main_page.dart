@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psaltir/models/navigation_models.dart';
 import 'package:psaltir/pages/accessibility_page.dart';
 import 'package:psaltir/pages/bookmarks_page.dart';
 import 'package:psaltir/pages/home_page.dart';
+import 'package:psaltir/pages/reading_page.dart';
 import 'package:psaltir/pages/settings_page.dart';
+import 'package:psaltir/providers/navigation_provider.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -12,33 +16,47 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    HomePage(),
-    AccessibilityPage(),
-    SettingsPage(),
-    BookmarksPage(),
+  final Map<AppPage, Widget> _pages = {
+    AppPage.home: HomePage(),
+    AppPage.accessibility: AccessibilityPage(),
+    AppPage.settings: SettingsPage(),
+    AppPage.bookmarks: BookmarksPage(),
+    AppPage.reading: ReadingPage(),
+    //details page
+  };
+
+  static const List<AppPage> _bottomNavBarPages = [
+    AppPage.home,
+    AppPage.accessibility,
+    AppPage.settings,
+    AppPage.bookmarks,
   ];
 
   @override
   Widget build(BuildContext context) {
+    final navProvider = context.watch<NavigationProvider>();
+    final currentPage = navProvider.currentPage;
+
     return Scaffold(
-      bottomNavigationBar: _buildBottomNavBar(),
-      body: SafeArea(child: _pages[_selectedIndex]),
+      bottomNavigationBar: _buildBottomNavBar(navProvider, currentPage),
+      body: SafeArea(child: _pages[currentPage]!),
       backgroundColor: Colors.amber[50],
     );
   }
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // TO DO: Replace with a row of IconButtons for more control (no highlight on sub-pages)
+  // check: https://stackoverflow.com/questions/74165517/bottomnavigationbar-without-highlighted-items-flutter
+  BottomNavigationBar _buildBottomNavBar(
+    NavigationProvider navProvider,
+    AppPage currentPage,
+  ) {
+    final currentIndex = _bottomNavBarPages.contains(currentPage)
+        ? _bottomNavBarPages.indexOf(currentPage)
+        : null;
 
-  BottomNavigationBar _buildBottomNavBar() {
     return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
+      currentIndex: currentIndex ?? 0,
+      onTap: (index) => navProvider.goTo(_bottomNavBarPages[index]),
       selectedItemColor: Colors.brown[400],
       iconSize: 30,
       items: [

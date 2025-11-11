@@ -4,6 +4,16 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-11
+
+- HomePage refactoring (code reorganisation only)
+- HomePage design change - the "Čitaj" button and tooltip above it are now positioned at the bottom of the screen
+- MainPage: Switched the BottomNavigationBar for a regular Row with IconButtons and added a slight animation
+
+📋 TO DO:
+
+- A .json file with psalms - hook it up with ReadingProvider
+
 ### 2025-11-10
 
 - Refactored MainPage so it can display pages that are not accessible from the bottom navigation bar
@@ -12,7 +22,7 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- Switch bottom navBar for a regular row with icons buttons for more control
+- <s>Switch bottom navBar for a regular row with IconButtons for more control</s>
 
 ### 2025-11-04
 
@@ -21,8 +31,8 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- implement the category case in getNextPsalm() in ReadingProvider
-- save psalms from the same sessions so they don't repeat in random mode
+- Implement the category case in getNextPsalm() in ReadingProvider
+- Save psalms from the same sessions so they don't repeat in random mode
 
 ### 2025-10-28
 
@@ -33,8 +43,8 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- Refactor HomePage - separate widgets
-- Keep HomePage state when navigating to another page then back
+- <s>Refactor HomePage - separate widgets</s>
+- [?] Keep HomePage state when navigating to another page then back
 - Implement an initial Theme - customize later
 - <s>Refactor to use Provider</s>
 

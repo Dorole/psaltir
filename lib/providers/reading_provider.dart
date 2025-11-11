@@ -6,6 +6,7 @@ class ReadingProvider extends ChangeNotifier {
   ReadingChoice? _readingChoice;
   Category? _selectedCategory;
   int? _psalmNumber;
+  // ignore: unused_field
   bool _categoryInOrder = false;
 
   // ***** DEBUG *****

@@ -25,56 +25,89 @@ class _MainPageState extends State<MainPage> {
     //details page
   };
 
-  static const List<AppPage> _bottomNavBarPages = [
-    AppPage.home,
-    AppPage.accessibility,
-    AppPage.settings,
-    AppPage.bookmarks,
-  ];
-
   @override
   Widget build(BuildContext context) {
     final navProvider = context.watch<NavigationProvider>();
     final currentPage = navProvider.currentPage;
 
     return Scaffold(
-      bottomNavigationBar: _buildBottomNavBar(navProvider, currentPage),
+      bottomNavigationBar: _buildCustomBottomNavBar(navProvider, currentPage),
       body: SafeArea(child: _pages[currentPage]!),
       backgroundColor: Colors.amber[50],
     );
   }
 
-  // TO DO: Replace with a row of IconButtons for more control (no highlight on sub-pages)
-  // check: https://stackoverflow.com/questions/74165517/bottomnavigationbar-without-highlighted-items-flutter
-  BottomNavigationBar _buildBottomNavBar(
+  Widget _buildCustomBottomNavBar(
     NavigationProvider navProvider,
     AppPage currentPage,
   ) {
-    final currentIndex = _bottomNavBarPages.contains(currentPage)
-        ? _bottomNavBarPages.indexOf(currentPage)
-        : null;
+    final navItems = const [
+      NavItem(Icons.home, AppPage.home),
+      NavItem(Icons.settings_accessibility_rounded, AppPage.accessibility),
+      NavItem(Icons.settings, AppPage.settings),
+      NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
+    ];
 
-    return BottomNavigationBar(
-      currentIndex: currentIndex ?? 0,
-      onTap: (index) => navProvider.goTo(_bottomNavBarPages[index]),
-      selectedItemColor: Colors.brown[400],
-      iconSize: 30,
-      items: [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: "",
-          backgroundColor: Colors.brown[200],
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.brown[200],
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 5,
+            offset: Offset(0, -2),
+          ),
+        ],
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          for (final navItem in navItems)
+            _buildNavIcon(
+              icon: navItem.icon,
+              page: navItem.page,
+              currentPage: currentPage,
+              navProvider: navProvider,
+            ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNavIcon({
+    required IconData icon,
+    required AppPage page,
+    required AppPage currentPage,
+    required NavigationProvider navProvider,
+  }) {
+    final bool isActive = page == currentPage;
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          onPressed: () => navProvider.goTo(page),
+          icon: Icon(icon),
+          iconSize: 30,
+          color: isActive ? Colors.brown[400] : Colors.white,
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings_accessibility_rounded),
-          label: "",
-        ),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: ""),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.bookmark_outline_rounded),
-          label: "",
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          height: isActive ? 6 : 4,
+          width: isActive ? 6 : 4,
+          decoration: BoxDecoration(
+            color: isActive ? Colors.brown[400] : Colors.transparent,
+            shape: BoxShape.circle,
+          ),
         ),
       ],
     );
   }
+}
+
+class NavItem {
+  final IconData icon;
+  final AppPage page;
+  const NavItem(this.icon, this.page);
 }

@@ -14,6 +14,9 @@ All notable changes to this project will be documented here.
 
 - A .json file with psalms - hook it up with ReadingProvider
 
+📷 See [SCREENSHOTS](screenshots/2025-11-11/).
+Note that the current design is only there so I have something to work with, it's not final.
+
 ### 2025-11-10
 
 - Refactored MainPage so it can display pages that are not accessible from the bottom navigation bar

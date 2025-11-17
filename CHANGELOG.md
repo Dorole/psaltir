@@ -4,6 +4,15 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-17
+
+- ReadingPage basic structure
+
+📋 TO DO:
+
+- Connect the buttons to provider to get next psalm
+- Consider: if the user doesn't exit the app, but navigates away from the reading page, HomePage shows a "Continue Reading" button or an IconButton next to the "Čitaj" button.
+
 ### 2025-11-11
 
 - HomePage refactoring (code reorganisation only)

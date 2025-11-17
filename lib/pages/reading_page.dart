@@ -56,7 +56,7 @@ class ReadingPage extends StatelessWidget {
                       child: Center(
                         child: IconButton(
                           onPressed: () =>
-                              {}, //Connect to provider to get next psalm
+                              readingProvider.goToNextPsalm(forward: false),
                           icon: Icon(Icons.chevron_left_rounded),
                         ),
                       ),
@@ -69,7 +69,7 @@ class ReadingPage extends StatelessWidget {
                       child: Center(
                         child: IconButton(
                           onPressed: () =>
-                              {}, //Connect to provider to get next psalm
+                              readingProvider.goToNextPsalm(forward: true),
                           icon: Icon(Icons.chevron_right_rounded),
                         ),
                       ),

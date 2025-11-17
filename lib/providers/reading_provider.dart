@@ -9,6 +9,9 @@ class ReadingProvider extends ChangeNotifier {
   // ignore: unused_field
   bool _categoryInOrder = false;
 
+  int _sequentialNext(int current) => (current < 150) ? current + 1 : 1;
+  int _sequentialPrevious(int current) => (current > 1) ? current - 1 : 150;
+
   // ***** DEBUG *****
   ReadingChoice? get readingChoice => _readingChoice;
   Category? get category => _selectedCategory;
@@ -22,28 +25,30 @@ class ReadingProvider extends ChangeNotifier {
   }) {
     _readingChoice = readingChoice;
     _selectedCategory = selectedCategory;
-    _psalmNumber = psalmNumber;
+    _psalmNumber = (psalmNumber != null) ? psalmNumber : getRandomPsalm();
     _categoryInOrder = categoryInOrder;
     notifyListeners();
   }
 
-  int getNextPsalm() {
-    switch (_readingChoice) {
-      case ReadingChoice.random:
-        return Random().nextInt(150) +
-            1; //treba pospremiti psalme iz iste sesije
-      case ReadingChoice.number:
-        // if the user is currently on psalm 150 and presses next --> go to Ps 1
-        return (_psalmNumber! < 150) ? _psalmNumber! + 1 : 1;
-      case ReadingChoice.category:
-        return 1; //TO_DO: IMPLEMENTIRATI OVO
-      default:
-        return 1;
-    }
+  int getRandomPsalm() {
+    return Random().nextInt(150) + 1;
   }
 
-  void goToNextPsalm() {
-    _psalmNumber = getNextPsalm();
+  void goToNextPsalm({required bool forward}) {
+    switch (_readingChoice) {
+      case ReadingChoice
+          .random: //ALTERNATIVE: display random psalm again, disregard direction
+      case ReadingChoice.number:
+        _psalmNumber = forward
+            ? _sequentialNext(_psalmNumber!)
+            : _sequentialPrevious(_psalmNumber!);
+        break;
+      case ReadingChoice.category:
+        _psalmNumber = 1; //TO_DO: IMPLEMENT
+        break;
+      default:
+        _psalmNumber = 1;
+    }
     notifyListeners();
   }
 }

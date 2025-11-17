@@ -7,10 +7,11 @@ All notable changes to this project will be documented here.
 ### 2025-11-17
 
 - ReadingPage basic structure
+- Implemented basic psalm navigation for random and number reading choices. Currently the app responds the same for both choices - the button for the next psalm displays the next psalm number and the button for previous displays the previous psalm number, depending on the current psalm number.
 
 📋 TO DO:
 
-- Connect the buttons to provider to get next psalm
+- Consider: ReadingChoice.random navigation always displays a random psalm, regardless of the current psalm number and direction (forward or back).
 - Consider: if the user doesn't exit the app, but navigates away from the reading page, HomePage shows a "Continue Reading" button or an IconButton next to the "Čitaj" button.
 
 ### 2025-11-11

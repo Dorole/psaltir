@@ -19,6 +19,8 @@ class CategorySelection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       children: [
         Row(
@@ -45,7 +47,14 @@ class CategorySelection extends StatelessWidget {
                 value: categoryInOrder,
                 onChanged: onOrderChanged,
                 padding: EdgeInsets.symmetric(vertical: 3),
-                //boja
+                inactiveTrackColor: colorScheme.tertiary,
+                activeTrackColor: colorScheme.tertiaryContainer,
+                thumbColor: WidgetStatePropertyAll<Color>(
+                  colorScheme.onTertiaryContainer,
+                ),
+                trackOutlineColor: WidgetStatePropertyAll<Color>(
+                  colorScheme.onTertiaryContainer,
+                ),
               ),
             ),
             Padding(
@@ -58,7 +67,10 @@ class CategorySelection extends StatelessWidget {
               triggerMode: TooltipTriggerMode.tap,
               showDuration: const Duration(seconds: 4),
               preferBelow: true,
-              child: Icon(Icons.info_outline_rounded, color: Colors.brown[400]),
+              child: Icon(
+                Icons.info_outline_rounded,
+                color: colorScheme.secondary,
+              ),
             ),
           ],
         ),

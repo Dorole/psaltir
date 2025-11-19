@@ -4,6 +4,11 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-19
+
+- Implemented an absolutely basic theme because I got tired of looking at brown and beige
+- Started writing a .json file with psalms data. For now, I have decided to go with simple .txt files that contain psalms and a .json file that contains psalms metadata. Perhaps in the future I should move to some kind of local database (which I've never used so far), but I will stick with this simple solution until the need arises for a more complicated one (if it arises). Currently there are 3 psalms. I will use them for setup and slowly fill the data for the rest.
+
 ### 2025-11-17
 
 - ReadingPage basic structure
@@ -58,7 +63,7 @@ Note that the current design is only there so I have something to work with, it'
 
 - <s>Refactor HomePage - separate widgets</s>
 - [?] Keep HomePage state when navigating to another page then back
-- Implement an initial Theme - customize later
+- <s>Implement an initial Theme - customize later</s>
 - <s>Refactor to use Provider</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-10-28/).

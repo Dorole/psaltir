@@ -148,12 +148,18 @@ class _HomePageState extends State<HomePage> {
   // ******************
 
   Widget _buildTitle() {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Center(
-        child: const Text(
+        child: Text(
           "PSALTIR",
-          style: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 70,
+            fontWeight: FontWeight.bold,
+            color: colorScheme.onPrimaryContainer,
+          ),
           textAlign: TextAlign.center,
         ),
       ),
@@ -226,6 +232,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildInfoIcon() {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -238,7 +246,7 @@ class _HomePageState extends State<HomePage> {
           child: Icon(
             Icons.info_outline_rounded,
             size: 40,
-            color: Colors.brown[400],
+            color: colorScheme.secondary,
           ),
         ), //add tooltip
       ],
@@ -246,6 +254,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildStartButton() {
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -254,14 +264,14 @@ class _HomePageState extends State<HomePage> {
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              side: BorderSide(color: Colors.brown, width: 2),
+              side: BorderSide(color: colorScheme.primary, width: 2),
             ),
           ),
           child: Padding(
             padding: const EdgeInsets.all(6),
             child: Text(
               "ČITAJ",
-              style: const TextStyle(fontSize: 40, color: Colors.brown),
+              style: TextStyle(fontSize: 40, color: colorScheme.primary),
             ),
           ),
         ),

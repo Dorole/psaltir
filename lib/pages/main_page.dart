@@ -29,11 +29,12 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) {
     final navProvider = context.watch<NavigationProvider>();
     final currentPage = navProvider.currentPage;
+    var colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       bottomNavigationBar: _buildCustomBottomNavBar(navProvider, currentPage),
       body: SafeArea(child: _pages[currentPage]!),
-      backgroundColor: Colors.amber[50],
+      backgroundColor: colorScheme.secondaryContainer,
     );
   }
 
@@ -47,10 +48,11 @@ class _MainPageState extends State<MainPage> {
       NavItem(Icons.settings, AppPage.settings),
       NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
     ];
+    var colorScheme = Theme.of(context).colorScheme;
 
     return Container(
       decoration: BoxDecoration(
-        color: Colors.brown[200],
+        color: colorScheme.secondary,
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -82,6 +84,8 @@ class _MainPageState extends State<MainPage> {
     required NavigationProvider navProvider,
   }) {
     final bool isActive = page == currentPage;
+    var colorScheme = Theme.of(context).colorScheme;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -89,7 +93,7 @@ class _MainPageState extends State<MainPage> {
           onPressed: () => navProvider.goTo(page),
           icon: Icon(icon),
           iconSize: 30,
-          color: isActive ? Colors.brown[400] : Colors.white,
+          color: isActive ? colorScheme.onSecondaryContainer : Colors.white,
         ),
         AnimatedContainer(
           duration: const Duration(milliseconds: 300),
@@ -97,7 +101,9 @@ class _MainPageState extends State<MainPage> {
           height: isActive ? 6 : 4,
           width: isActive ? 6 : 4,
           decoration: BoxDecoration(
-            color: isActive ? Colors.brown[400] : Colors.transparent,
+            color: isActive
+                ? colorScheme.onSecondaryContainer
+                : Colors.transparent,
             shape: BoxShape.circle,
           ),
         ),

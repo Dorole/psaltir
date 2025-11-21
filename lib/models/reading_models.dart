@@ -1,5 +1,4 @@
 import 'dart:collection';
-
 import 'package:flutter/material.dart';
 
 /// Describes how the reading mode is chosen
@@ -25,4 +24,13 @@ enum Category {
               CategoryEntry(value: category, label: category.label),
         ),
       );
+
+  // string --> enum conversion
+  static Category? fromString (String s) {
+    try {
+      return Category.values.firstWhere((categoryEnum) => categoryEnum.name == s);
+    } catch (_) {
+      throw FormatException("Unknown category: $s");
+    }
+  }
 }

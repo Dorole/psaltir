@@ -1,0 +1,68 @@
+[
+    {
+        "number": 1,
+        "file": "001.txt",
+        "tags": ["praise"]
+
+    },
+
+    {
+        "number": 2,
+        "file": "002.txt",
+        "tags": ["lament"]
+    },
+
+    {
+        "number": 3,
+        "file": "003.txt",
+        "tags": ["praise"]
+    },
+
+    {
+        "number": 4,
+        "file": "004.txt",
+        "tags": ["lament"]
+    },
+
+    {
+        "number": 5,
+        "file": "005.txt",
+        "tags": ["praise"]
+    },
+
+    {
+        "number": 6,
+        "file": "006.txt",
+        "tags": ["lament", "repent"]
+    },
+
+    {
+        "number": 7,
+        "file": "007.txt",
+        "tags": ["praise", "repent"]
+    },
+
+    {
+        "number": 8,
+        "file": "008.txt",
+        "tags": ["lament", "repent"]
+    },
+
+    {
+        "number": 9,
+        "file": "009.txt",
+        "tags": ["praise", "repent"]
+    },
+
+    {
+        "number": 10,
+        "file": "010.txt",
+        "tags": ["lament", "repent"]
+    },
+
+    {
+        "number": 11,
+        "file": "011.txt",
+        "tags": ["praise"]
+    }
+]

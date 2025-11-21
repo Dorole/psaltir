@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
+import 'package:psaltir/widgets/psalm_text.dart';
 
 class ReadingPage extends StatelessWidget {
   const ReadingPage({super.key});
@@ -39,12 +40,7 @@ class ReadingPage extends StatelessWidget {
                             "Psalm number: ${readingProvider.psalmNumber}",
                           ), // DEBUG
                           const SizedBox(height: 20),
-                          Text(
-                            // DEBUG
-                            textAlign: TextAlign.justify,
-                            softWrap: true,
-                            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-                          ),
+                          PsalmText(),
                         ],
                       ),
                     ),

@@ -4,6 +4,21 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-21
+
+- Implemented category mode - a category can be chosen from the dropdown menu. Psalms within a category can be read either in order or randomly. Categories are currently randomly assigned, they aren't necessarily correct.
+- Psalm text loader - the reading page now displays the corresponding psalm text.
+- Added psalm files up to 110 (courtesy of a helpful husband)
+
+📋 TO DO:
+
+- Swipe to navigate between psalms
+- Setup the top banner on the reading page
+- BACKLOG: page turn transition/animation
+
+📷 See [SCREENSHOTS](screenshots/2025-11-21/).
+Note that the current design is only there so I have something to work with, it's not final.
+
 ### 2025-11-19
 
 - Implemented an absolutely basic theme because I got tired of looking at brown and beige
@@ -27,7 +42,7 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- A .json file with psalms - hook it up with ReadingProvider
+- <s>A .json file with psalms - hook it up with ReadingProvider</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-11-11/).
 Note that the current design is only there so I have something to work with, it's not final.
@@ -49,8 +64,8 @@ Note that the current design is only there so I have something to work with, it'
 
 📋 TO DO:
 
-- Implement the category case in getNextPsalm() in ReadingProvider
-- Save psalms from the same sessions so they don't repeat in random mode
+- <s>Implement the category case in getNextPsalm() in ReadingProvider</s>
+- Save psalms from the same session so they don't repeat in random mode
 
 ### 2025-10-28
 

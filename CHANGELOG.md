@@ -4,6 +4,22 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-24
+
+- Moved literals to separate files
+- Random mode stores shown psalms so they don't repeat during the same session
+- Random mode always shows a random psalm when the user clicks forward or previous (instead of going in order)
+- Implemented bookmarks - psalms can be (un)bookmarked from the reading page via an icon button. Bookmark page shows a list of all bookmarked psalms. Psalms can be unbookmarked from the bookmark page.
+  Bookmarks and all related logic is stored in BookmarkProvider.
+
+📋 TO DO:
+
+- Extend a bookmark tile so it shows starting psalm text.
+- Consider storing bookmarks in an ordered collection.
+
+📷 See [SCREENSHOTS](screenshots/2025-11-24/).
+Note that the current design is only there so I have something to work with, it's not final.
+
 ### 2025-11-21
 
 - Implemented category mode - a category can be chosen from the dropdown menu. Psalms within a category can be read either in order or randomly. Categories are currently randomly assigned, they aren't necessarily correct.
@@ -31,7 +47,7 @@ Note that the current design is only there so I have something to work with, it'
 
 📋 TO DO:
 
-- Consider: ReadingChoice.random navigation always displays a random psalm, regardless of the current psalm number and direction (forward or back).
+- <s>Consider: ReadingChoice.random navigation always displays a random psalm, regardless of the current psalm number and direction (forward or back).</s>
 - Consider: if the user doesn't exit the app, but navigates away from the reading page, HomePage shows a "Continue Reading" button or an IconButton next to the "Čitaj" button.
 
 ### 2025-11-11
@@ -65,7 +81,7 @@ Note that the current design is only there so I have something to work with, it'
 📋 TO DO:
 
 - <s>Implement the category case in getNextPsalm() in ReadingProvider</s>
-- Save psalms from the same session so they don't repeat in random mode
+- <s>Save psalms from the same session so they don't repeat in random mode</s>
 
 ### 2025-10-28
 

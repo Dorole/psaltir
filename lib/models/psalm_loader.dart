@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
+import 'package:psaltir/constants/paths_consts.dart';
 import 'package:psaltir/models/psalm.dart';
 import 'package:psaltir/models/reading_models.dart';
 
@@ -11,9 +12,7 @@ class PsalmLoader {
   Future<List<Psalm>> _loadMetaData() async {
     if (_metaData != null) return _metaData!;
 
-    final jsonString = await rootBundle.loadString(
-      "assets/psalms_data.json",
-    );
+    final jsonString = await rootBundle.loadString(PathsConsts.metadataPath);
     final List<dynamic> data = jsonDecode(jsonString);
 
     _metaData = data
@@ -27,7 +26,7 @@ class PsalmLoader {
     final meta = await _loadMetaData();
     final match = meta.firstWhere((psalm) => psalm.number == number);
     try {
-      return await rootBundle.loadString("assets/psalms/${match.file}");
+      return await rootBundle.loadString(PathsConsts.psalmPath(match.file));
     } catch (e, st) {
       assert(() {
         print("TEXT ERROR: $e");

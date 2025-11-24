@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
 import 'package:psaltir/widgets/psalm_text.dart';
 
@@ -9,7 +10,6 @@ class ReadingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final readingProvider = context.watch<ReadingProvider>();
-
     // ***** DEBUG VIEW *****
 
     return Scaffold(
@@ -18,6 +18,26 @@ class ReadingPage extends StatelessWidget {
         child: Column(
           children: [
             const Text("*** READING PAGE ***"),
+            const SizedBox(height: 20),
+
+            Consumer<BookmarksProvider>(
+              builder: (_, bookmarksProvider, _) {
+                final currentPsalm = readingProvider.psalmNumber!;
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.bookmark_outline_rounded),
+                      selectedIcon: Icon(Icons.bookmark_rounded),
+                      isSelected: bookmarksProvider.isBookmarked(currentPsalm),
+                      onPressed: () =>
+                          bookmarksProvider.toggleBookmark(currentPsalm),
+                    ),
+                  ],
+                );
+              },
+            ),
+
             const SizedBox(height: 20),
 
             Expanded(

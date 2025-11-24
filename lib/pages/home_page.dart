@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psaltir/constants/app_consts.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/widgets/category_selection.dart';
 import '../providers/reading_provider.dart';
@@ -70,12 +71,16 @@ class _HomePageState extends State<HomePage> {
   bool _handleNumber(ReadingProvider readingProvider) {
     final text = _inputController.text.trim();
     if (text.isEmpty) {
-      _showMessage("Upišite broj psalma (1 - 150)");
+      _showMessage("Upišite broj psalma (1 - ${AppConsts.psalmCount})");
       return false;
     } else {
       final psalmNumber = int.tryParse(text);
-      if (psalmNumber == null || psalmNumber < 1 || psalmNumber > 150) {
-        _showMessage("Broj psalma mora biti između 1 i 150.");
+      if (psalmNumber == null ||
+          psalmNumber < 1 ||
+          psalmNumber > AppConsts.psalmCount) {
+        _showMessage(
+          "Broj psalma mora biti između 1 i ${AppConsts.psalmCount}.",
+        );
         return false;
       } else {
         readingProvider.setReadingOptions(
@@ -210,7 +215,7 @@ class _HomePageState extends State<HomePage> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
-                labelText: "1 - 150",
+                labelText: "1 - ${AppConsts.psalmCount}",
               ),
             ),
           ),

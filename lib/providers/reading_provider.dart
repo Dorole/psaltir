@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:psaltir/constants/app_consts.dart';
 import 'package:psaltir/models/psalm_loader.dart';
 
 import '../models/reading_models.dart';
@@ -11,14 +12,19 @@ class ReadingProvider extends ChangeNotifier {
   Category? _selectedCategory;
   int? _psalmNumber;
 
+  final Set<int> _randomSession = {};
+  final Random _rand = Random();
+
   bool _categoryInOrder = false;
   List<int>? _categoryPsalmNumbers;
   int _categoryIndex = 0;
 
   ReadingProvider({required this.psalmLoader});
 
-  int _sequentialNext(int current) => (current < 150) ? current + 1 : 1;
-  int _sequentialPrevious(int current) => (current > 1) ? current - 1 : 150;
+  int _sequentialNext(int current) =>
+      (current < AppConsts.psalmCount) ? current + 1 : 1;
+  int _sequentialPrevious(int current) =>
+      (current > 1) ? current - 1 : AppConsts.psalmCount;
   int _categoryNext(int currentIndex) =>
       (currentIndex + 1) % _categoryPsalmNumbers!.length;
   int _categoryPrevious(int currentIndex) =>
@@ -50,13 +56,24 @@ class ReadingProvider extends ChangeNotifier {
   }
 
   int getRandomPsalm() {
-    return Random().nextInt(150) + 1;
+    if (_randomSession.length == AppConsts.psalmCount) {
+      _randomSession.clear();
+    }
+
+    int newRand;
+    do {
+      newRand = _rand.nextInt(AppConsts.psalmCount) + 1;
+    } while (_randomSession.contains(newRand));
+
+    _randomSession.add(newRand);
+    return newRand;
   }
 
   void goToNextPsalm({required bool forward}) {
     switch (_readingChoice) {
-      case ReadingChoice
-          .random: //ALTERNATIVE: display random psalm again, disregard direction
+      case ReadingChoice.random:
+        _psalmNumber = getRandomPsalm();
+        break;
       case ReadingChoice.number:
         _psalmNumber = forward
             ? _sequentialNext(_psalmNumber!)
@@ -80,7 +97,7 @@ class ReadingProvider extends ChangeNotifier {
   }
 
   Future<void> _initializeCategory(Category category) async {
-    if (_categoryPsalmNumbers!.isNotEmpty){
+    if (_categoryPsalmNumbers!.isNotEmpty) {
       _categoryPsalmNumbers!.clear();
     }
 

@@ -15,6 +15,9 @@ All notable changes to this project will be documented here.
 - Top banners for reading and bookmarks page
 - Details page for psalms on reading page
 
+📷 See [SCREENSHOTS](screenshots/2025-11-27/).
+Note that the current design is only there so I have something to work with, it's not final.
+
 ### 2025-11-24
 
 - Moved literals to separate files

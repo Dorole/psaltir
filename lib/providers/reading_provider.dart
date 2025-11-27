@@ -6,7 +6,7 @@ import '../models/reading_models.dart';
 import 'package:flutter/material.dart';
 
 class ReadingProvider extends ChangeNotifier {
-  final PsalmLoader psalmLoader;
+  final PsalmLoader _psalmLoader;
 
   ReadingChoice? _readingChoice;
   Category? _selectedCategory;
@@ -19,7 +19,8 @@ class ReadingProvider extends ChangeNotifier {
   List<int>? _categoryPsalmNumbers;
   int _categoryIndex = 0;
 
-  ReadingProvider({required this.psalmLoader});
+  ReadingProvider({required PsalmLoader psalmLoader})
+    : _psalmLoader = psalmLoader;
 
   int _sequentialNext(int current) =>
       (current < AppConsts.psalmCount) ? current + 1 : 1;
@@ -93,7 +94,7 @@ class ReadingProvider extends ChangeNotifier {
 
   // ***** PSALM LOADING *****
   Future<String> loadCurrentPsalmText() async {
-    return await psalmLoader.getPsalmByNumber(_psalmNumber!);
+    return await _psalmLoader.getPsalmByNumber(_psalmNumber!);
   }
 
   Future<void> _initializeCategory(Category category) async {
@@ -101,7 +102,7 @@ class ReadingProvider extends ChangeNotifier {
       _categoryPsalmNumbers!.clear();
     }
 
-    _categoryPsalmNumbers = await psalmLoader.getPsalmsByCategory(category);
+    _categoryPsalmNumbers = await _psalmLoader.getPsalmsByCategory(category);
 
     if (!_categoryInOrder) {
       _categoryPsalmNumbers!.shuffle();

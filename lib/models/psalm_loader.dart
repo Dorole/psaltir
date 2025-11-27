@@ -48,6 +48,36 @@ class PsalmLoader {
     matches.sort();
     return matches;
   }
+
+  Future<String> loadPsalmPreview(int number, {int maxChars = 100}) async {
+    final fullText = await getPsalmByNumber(number);
+
+    final lines = fullText
+        .split("\n")
+        .map((line) => line.trim())
+        .where((line) => line.isNotEmpty)
+        .toList();
+
+    if (lines.isEmpty) return "";
+
+    String preview;
+    if (lines.length >= 2) {
+      preview = "${lines[0]}\n${lines[1]}";
+    } else {
+      preview = lines[0];
+    }
+
+    if (preview.endsWith(",") || preview.endsWith(":")) {
+      preview = preview.substring(0, preview.length - 1);
+    }
+
+    if (preview.length > maxChars) {
+      preview = preview.substring(0, maxChars).trimRight();
+      return "$preview...";
+    }
+
+    return preview;
+  }
 }
 
 class PsalmLoadException implements Exception {

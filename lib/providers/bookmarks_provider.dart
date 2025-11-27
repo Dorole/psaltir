@@ -1,24 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:psaltir/models/psalm_loader.dart';
 
 class BookmarksProvider extends ChangeNotifier {
   final Set<int> _bookmarks = {};
+  final Map<int, String> _previews = {};
+  final PsalmLoader _psalmLoader;
 
-  Set<int> get bookmarks => _bookmarks; // uncomment if needed
+  BookmarksProvider({required PsalmLoader psalmLoader})
+    : _psalmLoader = psalmLoader;
+
   bool isBookmarked(int number) => _bookmarks.contains(number);
+  List<int> get bookmarks => _bookmarks.toList();
+  String? getPreview(int number) => _previews[number];
 
-  void addBookmark(int number) {
+  Future<void> addBookmark(int number) async {
     _bookmarks.add(number);
-    notifyListeners();
 
-    print("Psalam $number dodan u favorite.");
+    if (!_previews.containsKey(number)) {
+      _previews[number] = await _psalmLoader.loadPsalmPreview(number);
+    }
+
+    notifyListeners();
     print("Favoriti: $_bookmarks");
   }
 
   void removeBookmark(int number) {
     _bookmarks.remove(number);
+    _previews.remove(number);
     notifyListeners();
 
-    print("Psalam $number izbrisan iz favorita");
     print("Favoriti: $_bookmarks");
   }
 
@@ -29,4 +39,12 @@ class BookmarksProvider extends ChangeNotifier {
       addBookmark(number);
     }
   }
+
+  List<int> getSortedBookmarks() {
+    var list = _bookmarks.toList();
+    list.sort();
+    return list;
+  }
+
+  int getPsalmSorted(int index) => getSortedBookmarks()[index];
 }

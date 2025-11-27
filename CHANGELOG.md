@@ -4,6 +4,17 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-27
+
+- Bookmarks now contain everything intended - psalm number, some starting text and a button for discarding a bookmark
+- Bookmarks are displayed in numerical order, not chronological
+- Changed the design of bookmarks so it looks more like end design (structurally)
+
+📋 TO DO:
+
+- Top banners for reading and bookmarks page
+- Details page for psalms on reading page
+
 ### 2025-11-24
 
 - Moved literals to separate files
@@ -14,8 +25,8 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- Extend a bookmark tile so it shows starting psalm text.
-- Consider storing bookmarks in an ordered collection.
+- <s>Extend a bookmark tile so it shows starting psalm text.</s>
+- <s>Consider storing bookmarks in an ordered collection.</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-11-24/).
 Note that the current design is only there so I have something to work with, it's not final.

@@ -10,11 +10,16 @@ void main() {
   runApp(
     MultiProvider(
       providers: [
+        Provider<PsalmLoader>(create: (_) => PsalmLoader()),
         ChangeNotifierProvider(
-          create: (_) => ReadingProvider(psalmLoader: PsalmLoader()),
+          create: (context) =>
+              ReadingProvider(psalmLoader: context.read<PsalmLoader>()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) =>
+              BookmarksProvider(psalmLoader: context.read<PsalmLoader>()),
         ),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
-        ChangeNotifierProvider(create: (_) => BookmarksProvider()),
       ],
       child: const MyApp(),
     ),

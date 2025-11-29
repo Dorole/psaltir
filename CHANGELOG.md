@@ -4,6 +4,19 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-11-29
+
+- Added a customizable top bar on reading, accessibility, settings and bookmarks page
+- Buttons on the top bar are currently only visual (except the bookmark button on the reading page)
+
+📋 TO DO:
+
+- Implement returning to the reading page from Settings and Accessibility (and Bookmarks??) if the user opened any of those pages from the reading page
+- Save bookmarks
+
+📷 See [SCREENSHOTS](screenshots/2025-11-29/).
+Note that the current design is only there so I have something to work with, it's not final.
+
 ### 2025-11-27
 
 - Bookmarks now contain everything intended - psalm number, some starting text and a button for discarding a bookmark
@@ -12,8 +25,9 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- Top banners for reading and bookmarks page
+- <s>Top banners for reading and bookmarks page</s>
 - Details page for psalms on reading page
+- <s>Click on bookmark card takes the user to the reading page, from there navigation is +/-1.</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-11-27/).
 Note that the current design is only there so I have something to work with, it's not final.

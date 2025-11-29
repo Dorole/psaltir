@@ -44,9 +44,9 @@ class _MainPageState extends State<MainPage> {
   ) {
     final navItems = const [
       NavItem(Icons.home, AppPage.home),
+      NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
       NavItem(Icons.settings_accessibility_rounded, AppPage.accessibility),
       NavItem(Icons.settings, AppPage.settings),
-      NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
     ];
     var colorScheme = Theme.of(context).colorScheme;
 

@@ -1,10 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psaltir/models/reading_models.dart';
 import 'package:psaltir/providers/bookmarks_provider.dart';
+import 'package:psaltir/providers/navigation_provider.dart';
+import 'package:psaltir/providers/reading_provider.dart';
 import 'package:psaltir/widgets/bookmark_card.dart';
+import 'package:psaltir/widgets/top_bar.dart';
 
 class BookmarksPage extends StatelessWidget {
-  const BookmarksPage({super.key});
+  BookmarksPage({super.key});
+
+  final String message = "Još nemate omiljenih psalama";
+  final TopBar header = TopBar(title: "OMILJENI PSALMI");
+  // razmisli pairat string headere s enumom stranice pa povuc iz nekog modela
+
+  void _onCardTap(
+    ReadingProvider reading,
+    NavigationProvider nav,
+    int psalmNumber,
+  ) {
+    reading.setReadingOptions(
+      readingChoice: ReadingChoice.number,
+      psalmNumber: psalmNumber,
+    );
+    nav.openReadingPage();
+  }
 
   // ***** DEBUG VIEW *****
   @override
@@ -15,14 +35,14 @@ class BookmarksPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          const Text("*** BOOKMARKS PAGE ***"),
+          header,
           const SizedBox(height: 20),
-
+      
           Expanded(
             child: Consumer<BookmarksProvider>(
               builder: (context, value, child) {
                 if (value.bookmarks.isEmpty) {
-                  return Center(child: Text("Još nemate omiljenih psalama"));
+                  return Center(child: Text(message));
                 } else {
                   return ListView.builder(
                     itemCount: value.bookmarks.length,
@@ -35,11 +55,27 @@ class BookmarksPage extends StatelessWidget {
                           children: [
                             Expanded(
                               flex: 4,
-                              child: BookmarkCard(
-                                themeColors: themeColors,
-                                psalmNumber: psalmNumber,
-                                theme: theme,
-                              ),
+                              child:
+                                  Consumer2<
+                                    ReadingProvider,
+                                    NavigationProvider
+                                  >(
+                                    builder: (_, reading, nav, child) {
+                                      return GestureDetector(
+                                        child: child!,
+                                        onTap: () => _onCardTap(
+                                          reading,
+                                          nav,
+                                          psalmNumber,
+                                        ),
+                                      );
+                                    },
+                                    child: BookmarkCard(
+                                      themeColors: themeColors,
+                                      psalmNumber: psalmNumber,
+                                      theme: theme,
+                                    ),
+                                  ),
                             ),
                             Expanded(
                               flex: 1,

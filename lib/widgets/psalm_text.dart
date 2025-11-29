@@ -17,7 +17,9 @@ class _PsalmTextState extends State<PsalmText> {
     super.didChangeDependencies();
 
     final readingProvider = context.watch<ReadingProvider>();
-    _currentPsalmText = Future.microtask(() => readingProvider.loadCurrentPsalmText());
+    _currentPsalmText = Future.microtask(
+      () => readingProvider.loadCurrentPsalmText(),
+    );
   }
 
   @override

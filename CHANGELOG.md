@@ -4,6 +4,16 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-12-05
+
+- Implemented Details View. Reading Page will display an info icon in the top bar for psalms that have details. Reading Page can now display two different views: Psalm View and Details View. There is some potential refactoring to consider here because these two views share a lot of logic.
+- Minor refactoring of PsalmLoader and ReadingProvider.
+- Made main() async to be able to preload psalm metadata and avoid unnecessary async operations.
+
+### 2025-12-02
+
+- Refactored Reading Page so it can display psalm text or psalm details
+
 ### 2025-11-29
 
 - Added a customizable top bar on reading, accessibility, settings and bookmarks page
@@ -13,6 +23,7 @@ All notable changes to this project will be documented here.
 
 - Implement returning to the reading page from Settings and Accessibility (and Bookmarks??) if the user opened any of those pages from the reading page
 - Save bookmarks
+- Consider pairing strings for page headers with page enums and retrieve the pairs from a model
 
 📷 See [SCREENSHOTS](screenshots/2025-11-29/).
 Note that the current design is only there so I have something to work with, it's not final.
@@ -26,7 +37,7 @@ Note that the current design is only there so I have something to work with, it'
 📋 TO DO:
 
 - <s>Top banners for reading and bookmarks page</s>
-- Details page for psalms on reading page
+- <s>Details page for psalms on reading page </s>
 - <s>Click on bookmark card takes the user to the reading page, from there navigation is +/-1.</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-11-27/).

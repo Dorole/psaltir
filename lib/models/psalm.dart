@@ -4,8 +4,14 @@ class Psalm {
   final int number;
   final String file;
   final List<Category> tags;
+  final bool hasDetails;
 
-  Psalm({required this.number, required this.file, required this.tags});
+  Psalm({
+    required this.number,
+    required this.file,
+    required this.tags,
+    required this.hasDetails,
+  });
 
   Psalm.fromJson(Map<String, dynamic> jsonItem)
     : number = jsonItem['number'] as int,
@@ -13,5 +19,6 @@ class Psalm {
       tags = (jsonItem['tags'] as List)
           .map((tag) => Category.fromString(tag))
           .whereType<Category>()
-          .toList();
+          .toList(),
+      hasDetails = jsonItem["hasDetails"] ?? false;
 }

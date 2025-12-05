@@ -6,18 +6,21 @@ import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final psalmLoader = PsalmLoader();
+  await psalmLoader.preloadData();
+
   runApp(
     MultiProvider(
       providers: [
-        Provider<PsalmLoader>(create: (_) => PsalmLoader()),
+        Provider<PsalmLoader>.value(value: psalmLoader),
         ChangeNotifierProvider(
-          create: (context) =>
-              ReadingProvider(psalmLoader: context.read<PsalmLoader>()),
+          create: (context) => ReadingProvider(psalmLoader: psalmLoader),
         ),
         ChangeNotifierProvider(
-          create: (context) =>
-              BookmarksProvider(psalmLoader: context.read<PsalmLoader>()),
+          create: (context) => BookmarksProvider(psalmLoader: psalmLoader),
         ),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],

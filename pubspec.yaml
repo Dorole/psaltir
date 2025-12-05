@@ -61,6 +61,7 @@ flutter:
   assets:
     - assets/psalms/
     - assets/psalms_data.json
+    - assets/details/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

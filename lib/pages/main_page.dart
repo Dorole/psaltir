@@ -22,7 +22,6 @@ class _MainPageState extends State<MainPage> {
     AppPage.settings: SettingsPage(),
     AppPage.bookmarks: BookmarksPage(),
     AppPage.reading: ReadingPage(),
-    //details page
   };
 
   @override

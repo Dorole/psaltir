@@ -21,7 +21,7 @@ class BookmarksProvider extends ChangeNotifier {
     }
 
     notifyListeners();
-    print("Favoriti: $_bookmarks");
+    //print("Favoriti: $_bookmarks");
   }
 
   void removeBookmark(int number) {
@@ -29,7 +29,7 @@ class BookmarksProvider extends ChangeNotifier {
     _previews.remove(number);
     notifyListeners();
 
-    print("Favoriti: $_bookmarks");
+    //print("Favoriti: $_bookmarks");
   }
 
   void toggleBookmark(int number) {

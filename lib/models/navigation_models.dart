@@ -1,1 +1,1 @@
-enum AppPage { home, accessibility, settings, bookmarks, reading, details }
+enum AppPage { home, accessibility, settings, bookmarks, reading }

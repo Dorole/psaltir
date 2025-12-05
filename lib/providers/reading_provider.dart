@@ -7,17 +7,22 @@ import 'package:flutter/material.dart';
 
 class ReadingProvider extends ChangeNotifier {
   final PsalmLoader _psalmLoader;
+  final Set<int> _randomSession = {};
+  final List<int> _categoryPsalmNumbers = [];
+  final Random _rand = Random();
 
   ReadingChoice? _readingChoice;
   Category? _selectedCategory;
   int? _psalmNumber;
-
-  final Set<int> _randomSession = {};
-  final Random _rand = Random();
-
   bool _categoryInOrder = false;
-  List<int>? _categoryPsalmNumbers;
   int _categoryIndex = 0;
+  bool _showPsalm = true;
+
+  Future<String>? _detailsFuture;
+
+  bool get showPsalm => _showPsalm;
+  bool get hasDetails => _psalmLoader.hasDetails(_psalmNumber!);
+  Future<String>? get detailsFuture => _detailsFuture;
 
   ReadingProvider({required PsalmLoader psalmLoader})
     : _psalmLoader = psalmLoader;
@@ -27,15 +32,16 @@ class ReadingProvider extends ChangeNotifier {
   int _sequentialPrevious(int current) =>
       (current > 1) ? current - 1 : AppConsts.psalmCount;
   int _categoryNext(int currentIndex) =>
-      (currentIndex + 1) % _categoryPsalmNumbers!.length;
+      (currentIndex + 1) % _categoryPsalmNumbers.length;
   int _categoryPrevious(int currentIndex) =>
-      (currentIndex - 1 + _categoryPsalmNumbers!.length) %
-      _categoryPsalmNumbers!.length;
+      (currentIndex - 1 + _categoryPsalmNumbers.length) %
+      _categoryPsalmNumbers.length;
 
-  // ***** DEBUG *****
+  // #region DEBUG
   ReadingChoice? get readingChoice => _readingChoice;
   Category? get category => _selectedCategory;
   int? get psalmNumber => _psalmNumber;
+  // #endregion
 
   void setReadingOptions({
     ReadingChoice? readingChoice,
@@ -48,7 +54,7 @@ class ReadingProvider extends ChangeNotifier {
     _categoryInOrder = categoryInOrder;
 
     if (_readingChoice == ReadingChoice.category) {
-      await _initializeCategory(_selectedCategory!);
+      _initializeCategory(_selectedCategory!);
     } else {
       _psalmNumber = psalmNumber ?? getRandomPsalm();
     }
@@ -92,23 +98,35 @@ class ReadingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleReadingView() {
+    _showPsalm = !_showPsalm;
+
+    if (!showPsalm) {
+      _detailsFuture = getCurrentPsalmDetails();
+    }
+
+    notifyListeners();
+  }
+
   // ***** PSALM LOADING *****
   Future<String> loadCurrentPsalmText() async {
     return await _psalmLoader.getPsalmByNumber(_psalmNumber!);
   }
 
-  Future<void> _initializeCategory(Category category) async {
-    if (_categoryPsalmNumbers!.isNotEmpty) {
-      _categoryPsalmNumbers!.clear();
-    }
+  Future<String> getCurrentPsalmDetails() async {
+    return await _psalmLoader.getDetails(_psalmNumber!);
+  }
 
-    _categoryPsalmNumbers = await _psalmLoader.getPsalmsByCategory(category);
+  void _initializeCategory(Category category) {
+    _categoryPsalmNumbers
+      ..clear()
+      ..addAll(_psalmLoader.getPsalmsByCategory(category));
 
     if (!_categoryInOrder) {
-      _categoryPsalmNumbers!.shuffle();
+      _categoryPsalmNumbers.shuffle();
     }
 
     _categoryIndex = 0;
-    _psalmNumber = _categoryPsalmNumbers!.first;
+    _psalmNumber = _categoryPsalmNumbers.first;
   }
 }

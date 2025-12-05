@@ -12,7 +12,6 @@ class BookmarksPage extends StatelessWidget {
 
   final String message = "Još nemate omiljenih psalama";
   final TopBar header = TopBar(title: "OMILJENI PSALMI");
-  // razmisli pairat string headere s enumom stranice pa povuc iz nekog modela
 
   void _onCardTap(
     ReadingProvider reading,
@@ -23,6 +22,11 @@ class BookmarksPage extends StatelessWidget {
       readingChoice: ReadingChoice.number,
       psalmNumber: psalmNumber,
     );
+
+    if (!reading.showPsalm) {
+      reading.toggleReadingView();
+    }
+
     nav.openReadingPage();
   }
 
@@ -37,7 +41,7 @@ class BookmarksPage extends StatelessWidget {
         children: [
           header,
           const SizedBox(height: 20),
-      
+
           Expanded(
             child: Consumer<BookmarksProvider>(
               builder: (context, value, child) {

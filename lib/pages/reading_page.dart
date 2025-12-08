@@ -63,6 +63,7 @@ class ReadingPage extends StatelessWidget {
   }
 
   // ***** DEBUG *****
+  // ignore: unused_element
   Widget _debugInfo(ReadingProvider readingProvider) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

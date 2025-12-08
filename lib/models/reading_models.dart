@@ -1,12 +1,10 @@
 import 'dart:collection';
 import 'package:flutter/material.dart';
 
-/// Describes how the reading mode is chosen
 enum ReadingChoice { category, number, random }
 
 typedef CategoryEntry = DropdownMenuEntry<Category>;
 
-/// Psalm categories
 enum Category {
   praise("Slavljenički"),
   repent("Pokajnički"),
@@ -26,11 +24,11 @@ enum Category {
       );
 
   // string --> enum conversion
-  static Category? fromString (String s) {
-    try {
-      return Category.values.firstWhere((categoryEnum) => categoryEnum.name == s);
-    } catch (_) {
-      throw FormatException("Unknown category: $s");
-    }
-  }
+  // static Category? fromString (String s) {
+  //   try {
+  //     return Category.values.firstWhere((categoryEnum) => categoryEnum.name == s);
+  //   } catch (_) {
+  //     throw FormatException("Unknown category: $s");
+  //   }
+  // }
 }

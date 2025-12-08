@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:psaltir/models/navigation_models.dart';
 import 'package:psaltir/widgets/top_bar.dart';
 import 'package:psaltir/widgets/top_bar_button.dart';
 
@@ -11,7 +12,10 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return TopBar(title: "POSTAVKE", leftAction: _backIcon());
+    return TopBar(
+      title: AppPage.settings.label.toUpperCase(),
+      leftAction: _backIcon(),
+    );
   }
 
   // TODO: RETURN TO READING IF CAME FROM READING

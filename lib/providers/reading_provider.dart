@@ -24,8 +24,7 @@ class ReadingProvider extends ChangeNotifier {
   bool get hasDetails => _psalmLoader.hasDetails(_psalmNumber!);
   Future<String>? get detailsFuture => _detailsFuture;
 
-  ReadingProvider({required PsalmLoader psalmLoader})
-    : _psalmLoader = psalmLoader;
+  ReadingProvider(this._psalmLoader);
 
   int _sequentialNext(int current) =>
       (current < AppConsts.psalmCount) ? current + 1 : 1;
@@ -90,7 +89,7 @@ class ReadingProvider extends ChangeNotifier {
         _categoryIndex = forward
             ? _categoryNext(_categoryIndex)
             : _categoryPrevious(_categoryIndex);
-        _psalmNumber = _categoryPsalmNumbers![_categoryIndex];
+        _psalmNumber = _categoryPsalmNumbers[_categoryIndex];
         break;
       default:
         _psalmNumber = 1;
@@ -108,7 +107,7 @@ class ReadingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // ***** PSALM LOADING *****
+  // #region PSALM LOADING
   Future<String> loadCurrentPsalmText() async {
     return await _psalmLoader.getPsalmByNumber(_psalmNumber!);
   }
@@ -129,4 +128,6 @@ class ReadingProvider extends ChangeNotifier {
     _categoryIndex = 0;
     _psalmNumber = _categoryPsalmNumbers.first;
   }
+
+  // #endregion
 }

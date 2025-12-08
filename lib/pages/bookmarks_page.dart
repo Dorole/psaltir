@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:psaltir/models/navigation_models.dart';
 import 'package:psaltir/models/reading_models.dart';
 import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
@@ -11,7 +12,7 @@ class BookmarksPage extends StatelessWidget {
   BookmarksPage({super.key});
 
   final String message = "Još nemate omiljenih psalama";
-  final TopBar header = TopBar(title: "OMILJENI PSALMI");
+  final TopBar header = TopBar(title: AppPage.bookmarks.label.toUpperCase());
 
   void _onCardTap(
     ReadingProvider reading,

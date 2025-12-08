@@ -4,6 +4,13 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2025-12-08
+
+- Implemented save/load of bookmarks (Shared Preferences). All that is stored is a simple int list (converted to a string list due to prefs' limitations) so I don't think anything more complicated is needed, at least not right now. Will see what to do when it comes to storing general and accessibility settings.
+- Refactored main.dart to implement eager init of BookmarksProvider and prevent the flickering of BookmarksPage the first time it is opened.
+- Extended AppPage enum in navigation_models with labels so I can pull the name of the pages from there instead of hard-coding the string for every page.
+- Simplified the reading_models (Category enum) by removing the fromString function for conversion of enum to string because apparently there was a built-in enum function for that all along so...
+
 ### 2025-12-05
 
 - Implemented Details View. Reading Page will display an info icon in the top bar for psalms that have details. Reading Page can now display two different views: Psalm View and Details View. There is some potential refactoring to consider here because these two views share a lot of logic.
@@ -22,8 +29,8 @@ All notable changes to this project will be documented here.
 📋 TO DO:
 
 - Implement returning to the reading page from Settings and Accessibility (and Bookmarks??) if the user opened any of those pages from the reading page
-- Save bookmarks
-- Consider pairing strings for page headers with page enums and retrieve the pairs from a model
+- <s>Save bookmarks</s>
+- <s>Consider pairing strings for page headers with page enums and retrieve the pairs from a model</s>
 
 📷 See [SCREENSHOTS](screenshots/2025-11-29/).
 Note that the current design is only there so I have something to work with, it's not final.
@@ -68,7 +75,7 @@ Note that the current design is only there so I have something to work with, it'
 📋 TO DO:
 
 - Swipe to navigate between psalms
-- Setup the top banner on the reading page
+- <s>Setup the top banner on the reading page</s>
 - BACKLOG: page turn transition/animation
 
 📷 See [SCREENSHOTS](screenshots/2025-11-21/).

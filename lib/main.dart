@@ -12,16 +12,17 @@ void main() async {
   final psalmLoader = PsalmLoader();
   await psalmLoader.preloadData();
 
+  final bookmarksProvider = BookmarksProvider(psalmLoader);
+  await bookmarksProvider.init();
+
   runApp(
     MultiProvider(
       providers: [
         Provider<PsalmLoader>.value(value: psalmLoader),
         ChangeNotifierProvider(
-          create: (context) => ReadingProvider(psalmLoader: psalmLoader),
+          create: (context) => ReadingProvider(psalmLoader),
         ),
-        ChangeNotifierProvider(
-          create: (context) => BookmarksProvider(psalmLoader: psalmLoader),
-        ),
+        ChangeNotifierProvider.value(value: bookmarksProvider),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
       ],
       child: const MyApp(),

@@ -17,7 +17,7 @@ class Psalm {
     : number = jsonItem['number'] as int,
       file = jsonItem['file'] as String,
       tags = (jsonItem['tags'] as List)
-          .map((tag) => Category.fromString(tag))
+          .map((tag) => Category.values.byName(tag))
           .whereType<Category>()
           .toList(),
       hasDetails = jsonItem["hasDetails"] ?? false;

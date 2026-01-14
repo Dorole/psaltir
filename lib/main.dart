@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psaltir/models/psalm_loader.dart';
 import 'package:psaltir/pages/main_page.dart';
+import 'package:psaltir/providers/accessibility_provider.dart';
 import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
@@ -24,6 +25,7 @@ void main() async {
         ),
         ChangeNotifierProvider.value(value: bookmarksProvider),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
+        ChangeNotifierProvider(create: (_) => AccessibilityProvider()),
       ],
       child: const MyApp(),
     ),
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.teal,
+          seedColor: Colors.lightBlue,
         ), //TEMPORARY THEME
       ),
     );

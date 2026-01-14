@@ -4,6 +4,23 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-14
+
+It's been a minute :)
+
+- Worked on reading settings - currently I've lumped them all under accessibility, but I think I'll change that name in the future since these settings refer to reading in general. For now it doesn't matter. Settings can currently be managed for the psalm text size, line height and font. Selections are applied in real time only to the demo text, not the actual psalm text.
+
+📋 TO DO:
+
+- Apply the settings to the actual reading page.
+- Implement other settings - light/dark theme.
+- Settings to be implemented in the later stage, but prepare the functionality: turn decorative font on/off (will only be used in titles - app title, psalm titles on the reading page and on the bookmark tiles), turn reading animation on/off.
+- Make sure the app produces no sound anywhere.
+- Consider grouping settings by functionality into expandable tiles or Kindle-app-like cards.
+
+📷 See [VIDEO](screenshots/2026-01-14/).
+Note that the current design is purely functional, not final.
+
 ### 2025-12-08
 
 - Implemented save/load of bookmarks (Shared Preferences). All that is stored is a simple int list (converted to a string list due to prefs' limitations) so I don't think anything more complicated is needed, at least not right now. Will see what to do when it comes to storing general and accessibility settings.

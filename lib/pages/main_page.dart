@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psaltir/models/navigation_models.dart';
-import 'package:psaltir/pages/accessibility_page.dart';
+//import 'package:psaltir/pages/accessibility_page.dart';
 import 'package:psaltir/pages/bookmarks_page.dart';
 import 'package:psaltir/pages/home_page.dart';
 import 'package:psaltir/pages/reading_page.dart';
@@ -18,7 +18,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final Map<AppPage, Widget> _pages = {
     AppPage.home: HomePage(),
-    AppPage.accessibility: AccessibilityPage(),
+    //AppPage.accessibility: AccessibilityPage(),
     AppPage.settings: SettingsPage(),
     AppPage.bookmarks: BookmarksPage(),
     AppPage.reading: ReadingPage(),
@@ -44,7 +44,7 @@ class _MainPageState extends State<MainPage> {
     final navItems = const [
       NavItem(Icons.home, AppPage.home),
       NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
-      NavItem(Icons.settings_accessibility_rounded, AppPage.accessibility),
+      //NavItem(Icons.settings_accessibility_rounded, AppPage.accessibility),
       NavItem(Icons.settings, AppPage.settings),
     ];
     var colorScheme = Theme.of(context).colorScheme;

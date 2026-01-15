@@ -6,6 +6,8 @@ import 'package:psaltir/providers/accessibility_provider.dart';
 import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
+import 'package:psaltir/providers/theme_provider.dart';
+import 'package:psaltir/theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,7 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
         Provider<PsalmLoader>.value(value: psalmLoader),
         ChangeNotifierProvider(
           create: (context) => ReadingProvider(psalmLoader),
@@ -37,15 +40,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.lightBlue,
-        ), //TEMPORARY THEME
-      ),
+      theme: AppTheme.lightTheme, 
+      darkTheme: AppTheme.darkTheme,
+      themeMode: themeProvider.themeMode, //uvedi system theme i pokreni prvo s tim
     );
   }
 }

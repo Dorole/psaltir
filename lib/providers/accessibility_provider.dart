@@ -21,6 +21,7 @@ class AccessibilityProvider extends ChangeNotifier {
   }
 
   void setReadingFont(ReadingFont font) {
+    if (_readingFont == font) return;
     _readingFont = font;
     notifyListeners();
   }

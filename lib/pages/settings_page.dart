@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:psaltir/models/navigation_models.dart';
 import 'package:psaltir/models/reading_font.dart';
 import 'package:psaltir/providers/accessibility_provider.dart';
+import 'package:psaltir/providers/theme_provider.dart';
 import 'package:psaltir/widgets/font_tile.dart';
 import 'package:psaltir/widgets/top_bar.dart';
 import 'package:psaltir/widgets/top_bar_button.dart';
@@ -21,79 +22,20 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          _buildHeader(),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "Veličina teksta psalma",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  Text(
-                    "A",
-                    style: TextStyle(fontSize: _baseTextSize * _minScale),
-                  ),
-                  Consumer<AccessibilityProvider>(
-                    builder: (_, accessibility, _) {
-                      return Slider(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        value: accessibility.readingTextScale,
-                        min: _minScale,
-                        max: _maxScale,
-                        divisions: 8,
-                        onChanged: accessibility.setReadingTextScale,
-                      );
-                    },
-                  ),
-                  Text(
-                    "A",
-                    style: TextStyle(fontSize: _baseTextSize * _maxScale),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                "Visina proreda",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Icon(Icons.remove),
-                  Consumer<AccessibilityProvider>(
-                    builder: (_, accessibility, _) {
-                      return Slider(
-                        value: accessibility.lineHeight,
-                        min: _baseLineHeight - _lineHeightStep,
-                        max: _baseLineHeight + 2 * _lineHeightStep,
-                        divisions: 3,
-                        onChanged: accessibility.setLineHeight,
-                      );
-                    },
-                  ),
-                  Icon(Icons.add),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          _buildFontSelectionSection(),
-          const SizedBox(height: 20),
-          _buildDemoSection(),
-        ],
-      ),
-    );
+    var children = [
+      _buildHeader(),
+      const SizedBox(height: 20),
+      _buildTextSizeSlider(),
+      const SizedBox(height: 20),
+      _buildLineHeightSlider(),
+      const SizedBox(height: 20),
+      _buildFontSelectionSection(),
+      const SizedBox(height: 20),
+      _buildDemoSection(),
+      const SizedBox(height: 20),
+      _buildThemeSelectionSection(),
+    ];
+    return Scaffold(body: Column(children: children));
   }
 
   Widget _buildHeader() {
@@ -108,16 +50,112 @@ class SettingsPage extends StatelessWidget {
     return TopBarButton(icon: Icons.arrow_back_rounded, onPressed: () {});
   }
 
-  //TODO: Malo uredi.
+  Widget _buildTextSizeSlider() {
+    return Semantics(
+      label: "Veličina teksta psalma",
+      hint: "Podesite veličinu teksta pomicanjem klizača",
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Veličina teksta",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Row(
+            children: [
+              ExcludeSemantics(
+                child: Text(
+                  "A",
+                  style: TextStyle(fontSize: _baseTextSize * _minScale),
+                ),
+              ),
+              Consumer<AccessibilityProvider>(
+                builder: (_, accessibility, _) {
+                  return Slider(
+                    padding: EdgeInsets.symmetric(horizontal: 5),
+                    value: accessibility.readingTextScale,
+                    min: _minScale,
+                    max: _maxScale,
+                    divisions: 8,
+                    onChanged: accessibility.setReadingTextScale,
+                  );
+                },
+              ),
+              ExcludeSemantics(
+                child: Text(
+                  "A",
+                  style: TextStyle(fontSize: _baseTextSize * _maxScale),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLineHeightSlider() {
+    return Semantics(
+      label: "Visina proreda",
+      hint: "Podesite visinu proreda pomicanjem klizača",
+
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Visina proreda",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ExcludeSemantics(child: Icon(Icons.remove)),
+              Consumer<AccessibilityProvider>(
+                builder: (_, accessibility, _) {
+                  return Slider(
+                    value: accessibility.lineHeight,
+                    min: _baseLineHeight - _lineHeightStep,
+                    max: _baseLineHeight + 2 * _lineHeightStep,
+                    divisions: 3,
+                    onChanged: accessibility.setLineHeight,
+                  );
+                },
+              ),
+              ExcludeSemantics(child: Icon(Icons.add)),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  //TODO: Malo uredi, uokviri itd.
   Widget _buildDemoSection() {
     return Consumer<AccessibilityProvider>(
       builder: (context, accessibility, _) {
-        return Text(
-          "Gospodine, Ti si pastir moj, \nni u čem ja ne oskudijevam.",
-          style: TextStyle(
-            fontFamily: accessibility.readingFont.label,
-            fontSize: (_baseTextSize * accessibility.readingTextScale),
-            height: accessibility.lineHeight,
+        return Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.tertiary,
+              width: 4,
+            ),
+          ),
+          child: Text(
+            "Gospodine, Ti si pastir moj, \nni u čem ja ne oskudijevam.",
+            style: TextStyle(
+              fontFamily: accessibility.readingFont.label,
+              fontSize: (_baseTextSize * accessibility.readingTextScale),
+              height: accessibility.lineHeight,
+            ),
           ),
         );
       },
@@ -140,4 +178,52 @@ class SettingsPage extends StatelessWidget {
       },
     );
   }
+
+  Widget _buildThemeSelectionSection() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            "Tema aplikacije",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        Consumer<ThemeProvider>(
+          builder: (context, themeProvider, _) {
+            return Row(
+              children: [
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: themeProvider.setLightTheme,
+                      icon: Icon(Icons.sunny),
+                      isSelected: themeProvider.isLight,
+                      tooltip: "Dodirni dvaput za odabir svijetle teme",
+                    ),
+                    ExcludeSemantics(child: Text("Svijetla")),
+                  ],
+                ),
+                const SizedBox(width: 20),
+                Column(
+                  children: [
+                    IconButton(
+                      onPressed: themeProvider.setDarkTheme,
+                      icon: Icon(Icons.nightlight_round_outlined),
+                      isSelected: themeProvider.isDark,
+                      tooltip: "Dodirni dvaput za odabir tamne teme",
+                    ),
+                    ExcludeSemantics(child: Text("Tamna")),
+                  ],
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  void foo() {}
 }

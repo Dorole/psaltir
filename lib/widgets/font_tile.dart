@@ -15,31 +15,42 @@ class FontTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(12),
-        onTap: onTap,
-        child: Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            border: Border.all(
-              color: selected
-                  ? Theme.of(context).colorScheme.primary
-                  : Colors.transparent,
-              width: 2,
-            ),
-          ),
-          child: Column(
-            children: [
-              Text(
-                "Aa",
-                style: TextStyle(fontFamily: font.fontFamily, fontSize: 32),
+    return Semantics(
+      label: "Font ${font.label}",
+      hint: selected ? "Odabran" : "Dodirni dvaput za odabir",
+      button: true,
+      selected: selected,
+
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: selected
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.transparent,
+                width: 2,
               ),
-              const SizedBox(height: 6),
-              Text(font.label, style: const TextStyle(fontSize: 12)),
-            ],
+            ),
+            child: Column(
+              children: [
+                ExcludeSemantics(
+                  child: Text(
+                    "Aa",
+                    style: TextStyle(fontFamily: font.fontFamily, fontSize: 32),
+                  ),
+                ),
+                const SizedBox(height: 6),
+                ExcludeSemantics(
+                  child: Text(font.label, style: const TextStyle(fontSize: 12)),
+                ),
+              ],
+            ),
           ),
         ),
       ),

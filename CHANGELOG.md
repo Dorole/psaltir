@@ -4,6 +4,19 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-15
+
+- Implemented the option to switch between the light and the dark theme.
+
+📋 TO DO:
+
+- Go over the hard-coded colors and use theme instead.
+- Implement the third option - use system theme - and make it a starting theme.
+- Persist theme.
+
+📷 See [SCREENSHOTS](screenshots/2026-01-15/).
+Note that the current design is purely functional, not final.
+
 ### 2026-01-14
 
 It's been a minute :)
@@ -13,7 +26,7 @@ It's been a minute :)
 📋 TO DO:
 
 - Apply the settings to the actual reading page.
-- Implement other settings - light/dark theme.
+- <s>Implement other settings - light/dark theme.</s>
 - Settings to be implemented in the later stage, but prepare the functionality: turn decorative font on/off (will only be used in titles - app title, psalm titles on the reading page and on the bookmark tiles), turn reading animation on/off.
 - Make sure the app produces no sound anywhere.
 - Consider grouping settings by functionality into expandable tiles or Kindle-app-like cards.

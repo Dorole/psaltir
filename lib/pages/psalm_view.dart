@@ -15,6 +15,7 @@ class PsalmView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 50.0),
             child: SingleChildScrollView(child: PsalmText()),
           ),
+
           Align(
             alignment: AlignmentGeometry.centerLeft,
             child: SizedBox(
@@ -40,9 +41,9 @@ class PsalmView extends StatelessWidget {
         : Icon(Icons.chevron_left_rounded);
 
     return Consumer<ReadingProvider>(
-      builder: (context, value, child) {
+      builder: (context, reading, child) {
         return IconButton(
-          onPressed: () => value.goToNextPsalm(forward: forward),
+          onPressed: () => reading.goToNextPsalm(forward: forward),
           icon: icon,
         );
       },

@@ -2,33 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
 
-class PsalmText extends StatefulWidget {
+class PsalmText extends StatelessWidget {
   const PsalmText({super.key});
 
   @override
-  State<PsalmText> createState() => _PsalmTextState();
-}
-
-class _PsalmTextState extends State<PsalmText> {
-  Future<String>? _currentPsalmText;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    final readingProvider = context.watch<ReadingProvider>();
-    _currentPsalmText = Future.microtask(
-      () => readingProvider.loadCurrentPsalmText(),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final currentPsalmText = context.watch<ReadingProvider>().currentPsalmText;
+    if (currentPsalmText == null) {
+      return const SizedBox.shrink();
+    }
+
     return FutureBuilder<String>(
-      future: _currentPsalmText,
+      future: currentPsalmText,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return const CircularProgressIndicator();
+          return const SizedBox.shrink();
         }
         if (snapshot.hasError) {
           return Text(

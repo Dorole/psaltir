@@ -43,7 +43,7 @@ class ReadingPage extends StatelessWidget {
                       : Icons.arrow_back,
                   onPressed: reading.toggleReadingView,
                 )
-              : null, //ili neki placeholder TopBarButton?
+              : null, 
         );
       },
     );

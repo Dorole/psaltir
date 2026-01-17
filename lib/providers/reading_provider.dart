@@ -19,10 +19,14 @@ class ReadingProvider extends ChangeNotifier {
   bool _showPsalm = true;
 
   Future<String>? _detailsFuture;
+  Future<String>? _currentPsalmText;
+  bool _lastMoveForward = true;
 
   bool get showPsalm => _showPsalm;
   bool get hasDetails => _psalmLoader.hasDetails(_psalmNumber!);
+  bool get lastMoveForward => _lastMoveForward;
   Future<String>? get detailsFuture => _detailsFuture;
+  Future<String>? get currentPsalmText => _currentPsalmText;
 
   ReadingProvider(this._psalmLoader);
 
@@ -58,6 +62,7 @@ class ReadingProvider extends ChangeNotifier {
       _psalmNumber = psalmNumber ?? getRandomPsalm();
     }
 
+    _currentPsalmText = loadCurrentPsalmText();
     notifyListeners();
   }
 
@@ -75,24 +80,33 @@ class ReadingProvider extends ChangeNotifier {
     return newRand;
   }
 
+  void _setNextPsalm(int number) {
+    _psalmNumber = number;
+    _currentPsalmText = loadCurrentPsalmText();
+  }
+
   void goToNextPsalm({required bool forward}) {
+    _lastMoveForward = forward;
+
     switch (_readingChoice) {
       case ReadingChoice.random:
-        _psalmNumber = getRandomPsalm();
+        _setNextPsalm(getRandomPsalm());
         break;
       case ReadingChoice.number:
-        _psalmNumber = forward
-            ? _sequentialNext(_psalmNumber!)
-            : _sequentialPrevious(_psalmNumber!);
+        _setNextPsalm(
+          forward
+              ? _sequentialNext(_psalmNumber!)
+              : _sequentialPrevious(_psalmNumber!),
+        );
         break;
       case ReadingChoice.category:
         _categoryIndex = forward
             ? _categoryNext(_categoryIndex)
             : _categoryPrevious(_categoryIndex);
-        _psalmNumber = _categoryPsalmNumbers[_categoryIndex];
+        _setNextPsalm(_categoryPsalmNumbers[_categoryIndex]);
         break;
       default:
-        _psalmNumber = 1;
+        _setNextPsalm(1);
     }
     notifyListeners();
   }

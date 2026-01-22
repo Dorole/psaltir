@@ -13,20 +13,30 @@ class ReadingProvider extends ChangeNotifier {
 
   ReadingChoice? _readingChoice;
   Category? _selectedCategory;
-  int? _psalmNumber;
   bool _categoryInOrder = false;
   int _categoryIndex = 0;
   bool _showPsalm = true;
-
+  late int _psalmNumber;
+  late int _nextPsalmNumber;
+  late int _prevPsalmNumber;
+  late Future<String> _currentPsalmText;
+  late Future<String> _nextPsalmText;
+  late Future<String> _prevPsalmText;
   Future<String>? _detailsFuture;
-  Future<String>? _currentPsalmText;
-  bool _lastMoveForward = true;
+  bool _initialized = false;
 
+  ReadingChoice? get readingChoice => _readingChoice;
+  Category? get category => _selectedCategory;
   bool get showPsalm => _showPsalm;
   bool get hasDetails => _psalmLoader.hasDetails(_psalmNumber!);
-  bool get lastMoveForward => _lastMoveForward;
+  int get psalmNumber => _psalmNumber;
+  int get nextPsalmNumber => _nextPsalmNumber;
+  int get prevPsalmNumber => _prevPsalmNumber;
+  Future<String> get currentPsalmText => _currentPsalmText;
+  Future<String> get nextPsalmText => _nextPsalmText;
+  Future<String> get prevPsalmText => _prevPsalmText;
   Future<String>? get detailsFuture => _detailsFuture;
-  Future<String>? get currentPsalmText => _currentPsalmText;
+  bool get isReady => _initialized;
 
   ReadingProvider(this._psalmLoader);
 
@@ -40,13 +50,7 @@ class ReadingProvider extends ChangeNotifier {
       (currentIndex - 1 + _categoryPsalmNumbers.length) %
       _categoryPsalmNumbers.length;
 
-  // #region DEBUG
-  ReadingChoice? get readingChoice => _readingChoice;
-  Category? get category => _selectedCategory;
-  int? get psalmNumber => _psalmNumber;
-  // #endregion
-
-  void setReadingOptions({
+  Future<void> setReadingOptions({
     ReadingChoice? readingChoice,
     Category? selectedCategory,
     int? psalmNumber,
@@ -63,6 +67,8 @@ class ReadingProvider extends ChangeNotifier {
     }
 
     _currentPsalmText = loadCurrentPsalmText();
+    _prepareNeighbours();
+    _initialized = true;
     notifyListeners();
   }
 
@@ -80,36 +86,50 @@ class ReadingProvider extends ChangeNotifier {
     return newRand;
   }
 
-  void _setNextPsalm(int number) {
-    _psalmNumber = number;
-    _currentPsalmText = loadCurrentPsalmText();
-  }
-
-  void goToNextPsalm({required bool forward}) {
-    _lastMoveForward = forward;
-
+  int _computeCandidate({required bool forward}) {
     switch (_readingChoice) {
       case ReadingChoice.random:
-        _setNextPsalm(getRandomPsalm());
-        break;
+        return getRandomPsalm();
+
       case ReadingChoice.number:
-        _setNextPsalm(
-          forward
-              ? _sequentialNext(_psalmNumber!)
-              : _sequentialPrevious(_psalmNumber!),
-        );
-        break;
+        return forward
+            ? _sequentialNext(_psalmNumber!)
+            : _sequentialPrevious(_psalmNumber!);
+
       case ReadingChoice.category:
-        _categoryIndex = forward
+        final candidateIdx = forward
             ? _categoryNext(_categoryIndex)
             : _categoryPrevious(_categoryIndex);
-        _setNextPsalm(_categoryPsalmNumbers[_categoryIndex]);
-        break;
+        return _categoryPsalmNumbers[candidateIdx];
+
       default:
-        _setNextPsalm(1);
+        return 1;
     }
-    notifyListeners();
   }
+
+  void _prepareNeighbours() {
+    _prevPsalmNumber = _computeCandidate(forward: false);
+    _nextPsalmNumber = _computeCandidate(forward: true);
+
+    _prevPsalmText = _psalmLoader.getPsalmByNumber(_prevPsalmNumber!);
+    _nextPsalmText = _psalmLoader.getPsalmByNumber(_nextPsalmNumber!);
+  }
+
+  void commitCandidate({required bool forward, bool notify = true}) {
+    _psalmNumber = forward ? _nextPsalmNumber : _prevPsalmNumber;
+    _currentPsalmText = loadCurrentPsalmText();
+
+    if (_readingChoice == ReadingChoice.category) {
+      _categoryIndex = forward
+          ? _categoryNext(_categoryIndex)
+          : _categoryPrevious(_categoryIndex);
+    }
+
+    _prepareNeighbours();
+    if (notify) notifyListeners();
+  }
+
+  void notify() => notifyListeners();
 
   void toggleReadingView() {
     _showPsalm = !_showPsalm;

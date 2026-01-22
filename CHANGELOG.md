@@ -4,6 +4,15 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-22
+
+- FINALLY managed to implement swiping and navigating to the next psalm via buttons with a basic animation.
+- For this to work I had to refactor ReadingProvider to separate next and previous and to stash neighbouring psalms so that no unexpected behavior can occur. I removed null values from the provider for fields that I don't expect to ever be null after the provider is initialized (Future<String> for psalm texts and int for psalm numbers). There was also the issue of timing the notifyListeners() so I adjusted the way it is called. Realistically, for navigating via buttons, it can be called straight away without issues, but if the user swipes, the notification has to be timed correctly in order to avoid the flicker. It is a bit hacky, but it's good enough, I'm done with this, seriously 🫸
+- I also refactored PsalmText which now always shows something instead of showing nothing - showing nothing caused a flicker when the next psalm settles on the screen while the psalm loads. In order to do this, I had to switch back to stateful for this class.
+- I had to refactor the way the psalms are rendered in the first place. Now PsalmView uses PageView (as opposed to the simple PsalmText widget which only changed its own content previously).
+- I first tried just animating what I had, which was a straight up no because it was one widget which only changed its content and it looked stupid. Then I tried PageView, PageView.builder, LoopPageView and then went back to PageView. This was <u>the biggest challenge so far</u>, I think.
+- The animation is a simple one. I wanted the Kindle-style one with page perforation and all, but decided against it in the end. That's now deep in the backlog, but I also think it's unnecessary for such a simple app like this.
+
 ### 2026-01-15
 
 - Implemented the option to switch between the light and the dark theme.
@@ -104,9 +113,9 @@ Note that the current design is only there so I have something to work with, it'
 
 📋 TO DO:
 
-- Swipe to navigate between psalms
+- <s>Swipe to navigate between psalms</s>
 - <s>Setup the top banner on the reading page</s>
-- BACKLOG: page turn transition/animation
+- BACKLOG: page turn transition/animation - 2026-01-22: there is a basic transition animation for now.
 
 📷 See [SCREENSHOTS](screenshots/2025-11-21/).
 Note that the current design is only there so I have something to work with, it's not final.

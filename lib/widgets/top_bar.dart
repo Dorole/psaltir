@@ -20,17 +20,23 @@ class TopBar extends StatelessWidget {
       color: theme.colorScheme.onSecondary,
     );
 
+    Widget action(Widget? a) => SizedBox(
+      width: 48,
+      height: 48,
+      child: Center(child: a ?? const SizedBox.shrink()),
+    );
+    
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 5, vertical: 16),
       color: themeColors.secondary,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          leftAction ?? const SizedBox(width: 30),
+          action(leftAction),
           Expanded(
             child: Center(child: Text(title, style: textStyle)),
           ),
-          rightAction ?? const SizedBox(width: 30),
+          action(rightAction),
         ],
       ),
     );

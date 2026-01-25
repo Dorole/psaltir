@@ -4,6 +4,19 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-25
+
+- Added a "Continue reading" button on the home page which is enabled if the reader has initiated a reading session.
+- Added functionality to the back button in the settings and bookmarks page - if the reader accessed those pages from the reading page, the back button is enabled and the user can tap it to continue reading.
+- Refactored the settings and bookmarks page since there was some repeating logic.
+
+📋 TO DO:
+
+- Apply the same header from settings and bookmarks to DetailsView (if possible).
+
+📷 See [SCREENSHOTS](screenshots/2026-01-25/).
+Note that the current design is purely functional, not final.
+
 ### 2026-01-22
 
 - FINALLY managed to implement swiping and navigating to the next psalm via buttons with a basic animation.
@@ -35,8 +48,9 @@ It's been a minute :)
 📋 TO DO:
 
 - Apply the settings to the actual reading page.
+- Persist settings.
 - <s>Implement other settings - light/dark theme.</s>
-- Settings to be implemented in the later stage, but prepare the functionality: turn decorative font on/off (will only be used in titles - app title, psalm titles on the reading page and on the bookmark tiles), turn reading animation on/off.
+- Settings to be implemented in the later stage, but prepare the functionality: turn decorative font on/off (will only be used in titles - app title, psalm titles on the reading page and on the bookmark tiles)
 - Make sure the app produces no sound anywhere.
 - Consider grouping settings by functionality into expandable tiles or Kindle-app-like cards.
 
@@ -67,7 +81,7 @@ Note that the current design is purely functional, not final.
 
 📋 TO DO:
 
-- Implement returning to the reading page from Settings and Accessibility (and Bookmarks??) if the user opened any of those pages from the reading page
+- <s>Implement returning to the reading page from Settings and Accessibility (and Bookmarks??) if the user opened any of those pages from the reading page</s>
 - <s>Save bookmarks</s>
 - <s>Consider pairing strings for page headers with page enums and retrieve the pairs from a model</s>
 
@@ -115,7 +129,7 @@ Note that the current design is only there so I have something to work with, it'
 
 - <s>Swipe to navigate between psalms</s>
 - <s>Setup the top banner on the reading page</s>
-- BACKLOG: page turn transition/animation - 2026-01-22: there is a basic transition animation for now.
+- <s>BACKLOG: page turn transition/animation</s> - 2026-01-22: there is a basic transition animation for now.
 
 📷 See [SCREENSHOTS](screenshots/2025-11-21/).
 Note that the current design is only there so I have something to work with, it's not final.
@@ -133,7 +147,7 @@ Note that the current design is only there so I have something to work with, it'
 📋 TO DO:
 
 - <s>Consider: ReadingChoice.random navigation always displays a random psalm, regardless of the current psalm number and direction (forward or back).</s>
-- Consider: if the user doesn't exit the app, but navigates away from the reading page, HomePage shows a "Continue Reading" button or an IconButton next to the "Čitaj" button.
+- <s>Consider: if the user doesn't exit the app, but navigates away from the reading page, HomePage shows a "Continue Reading" button or an IconButton next to the "Čitaj" button.</s>
 
 ### 2025-11-11
 
@@ -178,7 +192,6 @@ Note that the current design is only there so I have something to work with, it'
 📋 TO DO:
 
 - <s>Refactor HomePage - separate widgets</s>
-- [?] Keep HomePage state when navigating to another page then back
 - <s>Implement an initial Theme - customize later</s>
 - <s>Refactor to use Provider</s>
 

@@ -19,6 +19,8 @@ class TopBarButton extends StatelessWidget {
     final color = Theme.of(context).colorScheme.onSecondary;
 
     return IconButton(
+      constraints: const BoxConstraints(minWidth: 48, minHeight: 48),
+      padding: EdgeInsets.zero,
       isSelected: selected,
       icon: Icon(selected ? (selectedIcon ?? icon) : icon),
       iconSize: 30,

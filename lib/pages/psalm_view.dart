@@ -76,8 +76,8 @@ class _PsalmViewState extends State<PsalmView> {
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
                 child: NotificationListener<ScrollNotification>(
                   onNotification: (notification) {
-                    if (!_programmatic) _handleSwipe(notification);
-                    return false;
+                     if (!_programmatic) _handleSwipe(notification);
+                     return false;
                   },
                   child: PageView(
                     controller: _pageController,

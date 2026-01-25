@@ -6,13 +6,13 @@ import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
 import 'package:psaltir/widgets/bookmark_card.dart';
-import 'package:psaltir/widgets/top_bar.dart';
+import 'package:psaltir/widgets/top_bar_back_reading.dart';
+
 
 class BookmarksPage extends StatelessWidget {
-  BookmarksPage({super.key});
+  const BookmarksPage({super.key});
 
   final String message = "Još nemate omiljenih psalama";
-  final TopBar header = TopBar(title: AppPage.bookmarks.label.toUpperCase());
 
   void _onCardTap(
     ReadingProvider reading,
@@ -40,7 +40,7 @@ class BookmarksPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          header,
+          _buildHeader(),
           const SizedBox(height: 20),
 
           Expanded(
@@ -103,5 +103,9 @@ class BookmarksPage extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Widget _buildHeader() {
+    return TopBarBackReading(title: AppPage.bookmarks.label.toUpperCase());
   }
 }

@@ -5,8 +5,7 @@ import 'package:psaltir/models/reading_font.dart';
 import 'package:psaltir/providers/accessibility_provider.dart';
 import 'package:psaltir/providers/theme_provider.dart';
 import 'package:psaltir/widgets/font_tile.dart';
-import 'package:psaltir/widgets/top_bar.dart';
-import 'package:psaltir/widgets/top_bar_button.dart';
+import 'package:psaltir/widgets/top_bar_back_reading.dart';
 
 // podijeli u sekcije: Accessibility section, Theme section, Import/Export (service), About section
 
@@ -23,7 +22,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var children = [
-      _buildHeader(),
+      _buildHeader(context),
       const SizedBox(height: 20),
       _buildTextSizeSlider(),
       const SizedBox(height: 20),
@@ -38,16 +37,8 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(body: Column(children: children));
   }
 
-  Widget _buildHeader() {
-    return TopBar(
-      title: AppPage.settings.label.toUpperCase(),
-      leftAction: _backIcon(),
-    );
-  }
-
-  // TODO: RETURN TO READING IF CAME FROM READING
-  Widget _backIcon() {
-    return TopBarButton(icon: Icons.arrow_back_rounded, onPressed: () {});
+  Widget _buildHeader(BuildContext context) {
+    return TopBarBackReading(title: AppPage.settings.label.toUpperCase());
   }
 
   Widget _buildTextSizeSlider() {

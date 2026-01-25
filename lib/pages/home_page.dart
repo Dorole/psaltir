@@ -120,6 +120,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void _onContinuePressed() {
+    context.read<NavigationProvider>().openReadingPage();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,10 +228,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildBottomSection() {
+    final reading = context.watch<ReadingProvider>();
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 50),
       child: Column(
         children: [
+          if (reading.isReady) ...[
+            _buildContinueButton(),
+            const SizedBox(height: 45),
+          ],
+
           _buildInfoIcon(),
           const SizedBox(height: 15),
           _buildStartButton(),
@@ -260,25 +271,47 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildStartButton() {
     var colorScheme = Theme.of(context).colorScheme;
+    return _buildButton(
+      onPressed: _onSubmitPressed,
+      child: Text(
+        "ČITAJ",
+        style: TextStyle(fontSize: 40, color: colorScheme.primary),
+      ),
+      borderColor: colorScheme.primary,
+    );
+  }
 
+  Widget _buildContinueButton() {
+    var colorScheme = Theme.of(context).colorScheme;
+    return _buildButton(
+      onPressed: _onContinuePressed,
+      child: Text(
+        "NASTAVI",
+        style: TextStyle(fontSize: 25, color: colorScheme.tertiary),
+      ),
+      borderColor: colorScheme.tertiary,
+      borderWidth: 1,
+    );
+  }
+
+  Widget _buildButton({
+    required VoidCallback onPressed,
+    required Widget child,
+    required Color borderColor,
+    double borderWidth = 2,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
-          onPressed: _onSubmitPressed,
+          onPressed: onPressed,
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: const BorderRadius.all(Radius.circular(8)),
-              side: BorderSide(color: colorScheme.primary, width: 2),
+              side: BorderSide(color: borderColor, width: borderWidth),
             ),
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(6),
-            child: Text(
-              "ČITAJ",
-              style: TextStyle(fontSize: 40, color: colorScheme.primary),
-            ),
-          ),
+          child: Padding(padding: const EdgeInsets.all(6), child: child),
         ),
       ],
     );

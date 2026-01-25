@@ -18,7 +18,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final Map<AppPage, Widget> _pages = {
     AppPage.home: HomePage(),
-    //AppPage.accessibility: AccessibilityPage(),
     AppPage.settings: SettingsPage(),
     AppPage.bookmarks: BookmarksPage(),
     AppPage.reading: ReadingPage(),
@@ -44,7 +43,6 @@ class _MainPageState extends State<MainPage> {
     final navItems = const [
       NavItem(Icons.home, AppPage.home),
       NavItem(Icons.bookmark_outline_rounded, AppPage.bookmarks),
-      //NavItem(Icons.settings_accessibility_rounded, AppPage.accessibility),
       NavItem(Icons.settings, AppPage.settings),
     ];
     var colorScheme = Theme.of(context).colorScheme;

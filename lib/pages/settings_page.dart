@@ -12,11 +12,6 @@ import 'package:psaltir/widgets/top_bar_back_reading.dart';
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
-  final double _baseTextSize = 18; //move to app consts?
-  final double _minScale = 0.8;
-  final double _maxScale = 1.6;
-
-  final double _baseLineHeight = 1.4; //ovo se postavlja i u accessibility??
   final double _lineHeightStep = 0.2;
 
   @override
@@ -56,33 +51,41 @@ class SettingsPage extends StatelessWidget {
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
-          Row(
-            children: [
-              ExcludeSemantics(
-                child: Text(
-                  "A",
-                  style: TextStyle(fontSize: _baseTextSize * _minScale),
-                ),
-              ),
-              Consumer<AccessibilityProvider>(
-                builder: (_, accessibility, _) {
-                  return Slider(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    value: accessibility.readingTextScale,
-                    min: _minScale,
-                    max: _maxScale,
-                    divisions: 8,
-                    onChanged: accessibility.setReadingTextScale,
-                  );
-                },
-              ),
-              ExcludeSemantics(
-                child: Text(
-                  "A",
-                  style: TextStyle(fontSize: _baseTextSize * _maxScale),
-                ),
-              ),
-            ],
+          Consumer<TextSettingsProvider>(
+            builder: (_, settings, _) {
+              return Row(
+                children: [
+                  ExcludeSemantics(
+                    child: Text(
+                      "A",
+                      style: TextStyle(
+                        fontSize: settings.baseTextSize * settings.minTextScale,
+                      ),
+                    ),
+                  ),
+                  Consumer<TextSettingsProvider>(
+                    builder: (_, settings, _) {
+                      return Slider(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        value: settings.readingTextScale,
+                        min: settings.minTextScale,
+                        max: settings.maxTextScale,
+                        divisions: 8,
+                        onChanged: settings.setReadingTextScale,
+                      );
+                    },
+                  ),
+                  ExcludeSemantics(
+                    child: Text(
+                      "A",
+                      style: TextStyle(
+                        fontSize: settings.baseTextSize * settings.maxTextScale,
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            },
           ),
         ],
       ),
@@ -108,14 +111,14 @@ class SettingsPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ExcludeSemantics(child: Icon(Icons.remove)),
-              Consumer<AccessibilityProvider>(
-                builder: (_, accessibility, _) {
+              Consumer<TextSettingsProvider>(
+                builder: (_, settings, _) {
                   return Slider(
-                    value: accessibility.lineHeight,
-                    min: _baseLineHeight - _lineHeightStep,
-                    max: _baseLineHeight + 2 * _lineHeightStep,
+                    value: settings.lineHeight,
+                    min: settings.baseLineHeight - _lineHeightStep,
+                    max: settings.baseLineHeight + 2 * _lineHeightStep,
                     divisions: 3,
-                    onChanged: accessibility.setLineHeight,
+                    onChanged: settings.setLineHeight,
                   );
                 },
               ),
@@ -127,10 +130,9 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  //TODO: Malo uredi, uokviri itd.
   Widget _buildDemoSection() {
-    return Consumer<AccessibilityProvider>(
-      builder: (context, accessibility, _) {
+    return Consumer<TextSettingsProvider>(
+      builder: (context, settings, _) {
         return Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
@@ -142,11 +144,7 @@ class SettingsPage extends StatelessWidget {
           ),
           child: Text(
             "Gospodine, Ti si pastir moj, \nni u čem ja ne oskudijevam.",
-            style: TextStyle(
-              fontFamily: accessibility.readingFont.label,
-              fontSize: (_baseTextSize * accessibility.readingTextScale),
-              height: accessibility.lineHeight,
-            ),
+            style: settings.readingTextStyle,
           ),
         );
       },
@@ -154,15 +152,15 @@ class SettingsPage extends StatelessWidget {
   }
 
   Widget _buildFontSelectionSection() {
-    return Consumer<AccessibilityProvider>(
-      builder: (context, accessibility, _) {
+    return Consumer<TextSettingsProvider>(
+      builder: (context, settings, _) {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: ReadingFont.values.map((font) {
             return FontTile(
               font: font,
-              selected: accessibility.readingFont == font,
-              onTap: () => accessibility.setReadingFont(font),
+              selected: settings.readingFont == font,
+              onTap: () => settings.setReadingFont(font),
             );
           }).toList(),
         );

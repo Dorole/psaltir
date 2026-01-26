@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psaltir/constants/app_consts.dart';
-import 'package:psaltir/models/psalm_loader.dart';
+import 'package:psaltir/services/psalm_loader.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BookmarksProvider extends ChangeNotifier {

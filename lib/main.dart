@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:psaltir/models/psalm_loader.dart';
+import 'package:psaltir/services/app_prefs.dart';
+import 'package:psaltir/services/psalm_loader.dart';
 import 'package:psaltir/pages/main_page.dart';
 import 'package:psaltir/providers/accessibility_provider.dart';
 import 'package:psaltir/providers/bookmarks_provider.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/providers/reading_provider.dart';
 import 'package:psaltir/providers/theme_provider.dart';
+import 'package:psaltir/services/settings_store.dart';
 import 'package:psaltir/theme/app_theme.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,17 +21,22 @@ void main() async {
   final bookmarksProvider = BookmarksProvider(psalmLoader);
   await bookmarksProvider.init();
 
+  final prefs = await SharedPreferences.getInstance();
+  final appPrefs = AppPrefs(prefs);
+  final settingsStore = SettingsStore(appPrefs);
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
-        Provider<PsalmLoader>.value(value: psalmLoader),
         ChangeNotifierProvider(
           create: (context) => ReadingProvider(psalmLoader),
         ),
         ChangeNotifierProvider.value(value: bookmarksProvider),
         ChangeNotifierProvider(create: (_) => NavigationProvider()),
-        ChangeNotifierProvider(create: (_) => AccessibilityProvider()),
+        ChangeNotifierProvider(
+          create: (_) => TextSettingsProvider(settingsStore)..load(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -45,9 +53,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: MainPage(),
-      theme: AppTheme.lightTheme, 
+      theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      themeMode: themeProvider.themeMode, //uvedi system theme i pokreni prvo s tim
+      themeMode:
+          themeProvider.themeMode, //uvedi system theme i pokreni prvo s tim
     );
   }
 }

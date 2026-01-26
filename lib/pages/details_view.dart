@@ -8,7 +8,6 @@ class DetailsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      // TO-DO: ovo se ponavlja tu i u psalmView pa potencijalno ekstraktaj widget
       padding: EdgeInsets.symmetric(horizontal: 50.0),
       child: SingleChildScrollView(child: _detailsText()),
     );
@@ -17,7 +16,6 @@ class DetailsView extends StatelessWidget {
   Widget _detailsText() {
     return Consumer<ReadingProvider>(
       builder: (_, reading, _) {
-        // TO-DO: ovo se isto uglavnom ponavlja tu i u psalmView
         return FutureBuilder<String>(
           future: reading.detailsFuture,
           builder: (context, snapshot) {

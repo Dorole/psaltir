@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'package:psaltir/constants/app_consts.dart';
-import 'package:psaltir/models/psalm_loader.dart';
+import 'package:psaltir/services/psalm_loader.dart';
 
 import '../models/reading_models.dart';
 import 'package:flutter/material.dart';

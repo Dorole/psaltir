@@ -4,15 +4,23 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-26
+
+- Text settings are applied to the text on the reading page.
+- Renamed Accessibility Provider to Text Settings Provider and moved consts from the settings page to the provider because it's more logical for them to be there.
+- Implemented saving/loading of text settings.
+
+📋 TO DO:
+
+- Adjust bookmarks save/laod to use the same system as settings.
+- Clean up main().
+- Add UI button for resetting text settings to defaults.
+
 ### 2026-01-25
 
 - Added a "Continue reading" button on the home page which is enabled if the reader has initiated a reading session.
 - Added functionality to the back button in the settings and bookmarks page - if the reader accessed those pages from the reading page, the back button is enabled and the user can tap it to continue reading.
 - Refactored the settings and bookmarks page since there was some repeating logic.
-
-📋 TO DO:
-
-- Apply the same header from settings and bookmarks to DetailsView (if possible).
 
 📷 See [SCREENSHOTS](screenshots/2026-01-25/).
 Note that the current design is purely functional, not final.
@@ -47,8 +55,8 @@ It's been a minute :)
 
 📋 TO DO:
 
-- Apply the settings to the actual reading page.
-- Persist settings.
+- <s>Apply the settings to the actual reading page.</s>
+- <s>Persist settings.</s>
 - <s>Implement other settings - light/dark theme.</s>
 - Settings to be implemented in the later stage, but prepare the functionality: turn decorative font on/off (will only be used in titles - app title, psalm titles on the reading page and on the bookmark tiles)
 - Make sure the app produces no sound anywhere.

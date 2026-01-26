@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:psaltir/providers/accessibility_provider.dart';
 
 class PsalmText extends StatefulWidget {
   final Future<String> text;
@@ -13,6 +15,9 @@ class _PsalmTextState extends State<PsalmText> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = context.select<TextSettingsProvider, TextStyle> (
+      (settings) => settings.readingTextStyle,
+    );
     return FutureBuilder<String>(
       future: widget.text,
       initialData: _lastText,
@@ -20,7 +25,7 @@ class _PsalmTextState extends State<PsalmText> {
         if (snapshot.hasError) {
           return Text(
             snapshot.error.toString(),
-            style: const TextStyle(color: Colors.red),
+            style: textStyle.copyWith(color: Colors.red),
           );
         }
         final data = snapshot.data;
@@ -29,8 +34,9 @@ class _PsalmTextState extends State<PsalmText> {
           _lastText = data;
         }
 
-        return Text(data ?? "");
+        return Text(data ?? "", style: textStyle);
       },
     );
   }
+
 }

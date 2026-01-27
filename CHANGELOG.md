@@ -4,6 +4,24 @@ All notable changes to this project will be documented here.
 
 ## [Unreleased]
 
+### 2026-01-27
+
+- Implemented theme save/load.
+- Refactored bookmarks save/load to use the same system as settings.
+- Added UI button for resetting text settings to defaults.
+- Cleaned up main() so it's not as cluttered.
+- Added system theme to theme options.
+- Minor refactoring of SettingsPage and ThemeProvider.
+
+📷 See [SCREENSHOTS](screenshots/2026-01-27/).
+Note that the current design is purely functional, not final.
+
+📋 TO DO:
+
+- Add the rest of the settings and restructure the settings page by functionality.
+- Add decorative font and the option to toggle it on/off.
+- Implement a custom theme.
+
 ### 2026-01-26
 
 - Text settings are applied to the text on the reading page.
@@ -12,9 +30,9 @@ All notable changes to this project will be documented here.
 
 📋 TO DO:
 
-- Adjust bookmarks save/laod to use the same system as settings.
-- Clean up main().
-- Add UI button for resetting text settings to defaults.
+- <s>Adjust bookmarks save/load to use the same system as settings.</s>
+- <s>Clean up main().</s>
+- <s>Add UI button for resetting text settings to defaults.</s>
 
 ### 2026-01-25
 
@@ -41,8 +59,8 @@ Note that the current design is purely functional, not final.
 📋 TO DO:
 
 - Go over the hard-coded colors and use theme instead.
-- Implement the third option - use system theme - and make it a starting theme.
-- Persist theme.
+- <s>Implement the third option - use system theme - and make it a starting theme.</s>
+- <s>Persist theme.</s>
 
 📷 See [SCREENSHOTS](screenshots/2026-01-15/).
 Note that the current design is purely functional, not final.

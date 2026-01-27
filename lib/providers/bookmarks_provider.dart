@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:psaltir/constants/app_consts.dart';
+import 'package:psaltir/services/bookmarks_store.dart';
 import 'package:psaltir/services/psalm_loader.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class BookmarksProvider extends ChangeNotifier {
+  BookmarksProvider(this._store, this._psalmLoader);
+
+  final BookmarksStore _store;
+  final PsalmLoader _psalmLoader;
+
   final Set<int> _bookmarks = {};
   final Map<int, String> _previews = {};
-  final PsalmLoader _psalmLoader;
-  late final SharedPreferences _prefs;
   bool _initialized = false;
-
-  BookmarksProvider(this._psalmLoader);
 
   bool isBookmarked(int number) => _bookmarks.contains(number);
   String? getPreview(int number) => _previews[number];
@@ -23,9 +23,7 @@ class BookmarksProvider extends ChangeNotifier {
 
   Future<void> init() async {
     if (_initialized) return;
-
-    _prefs = await SharedPreferences.getInstance();
-    await _loadFromStorage();
+    await _load();
     _initialized = true;
   }
 
@@ -36,16 +34,16 @@ class BookmarksProvider extends ChangeNotifier {
       _previews[number] = await _psalmLoader.loadPsalmPreview(number);
     }
 
-    _saveToStorage();
     notifyListeners();
+    await _save();
     //print("Favoriti: $_bookmarks");
   }
 
-  void removeBookmark(int number) {
+  Future<void> removeBookmark(int number) async {
     _bookmarks.remove(number);
     _previews.remove(number);
-    _saveToStorage();
     notifyListeners();
+    await _save();
 
     //print("Favoriti: $_bookmarks");
   }
@@ -67,12 +65,12 @@ class BookmarksProvider extends ChangeNotifier {
   int getPsalmSorted(int index) => getSortedBookmarks()[index];
 
   // #region SAVE/LOAD
-  Future<void> _loadFromStorage() async {
-    final list = _prefs.getStringList(AppConsts.bookmarksStorage) ?? [];
+  Future<void> _load() async {
+    final loaded = _store.loadBookmarks();
 
     _bookmarks
       ..clear()
-      ..addAll(list.map(int.parse));
+      ..addAll(loaded);
 
     for (var num in _bookmarks) {
       _previews[num] = await _psalmLoader.loadPsalmPreview(num);
@@ -83,25 +81,16 @@ class BookmarksProvider extends ChangeNotifier {
     //print("Učitani psalmi: $_bookmarks");
   }
 
-  Future<void> _saveToStorage() async {
-    await _prefs.setStringList(
-      AppConsts.bookmarksStorage,
-      _bookmarks.map((e) => e.toString()).toList(),
-    );
-
-    // print(
-    //   "Spremljeni psalmi: ${_prefs.getStringList(AppConsts.bookmarksStorage)}",
-    // );
-  }
+  Future<void> _save() => _store.saveBookmarks(_bookmarks);
   // #endregion
 
   // #region TESTING
   Future<void> clearBookmarks() async {
     _bookmarks.clear();
     _previews.clear();
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(AppConsts.bookmarksStorage);
     notifyListeners();
+
+    await _store.clearBookmarks();
   }
 
   // #endregion

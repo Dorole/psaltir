@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:psaltir/constants/app_consts.dart';
 import 'package:psaltir/providers/navigation_provider.dart';
 import 'package:psaltir/widgets/category_selection.dart';
+import 'package:psaltir/widgets/standard_button.dart';
 import '../providers/reading_provider.dart';
 import '../models/reading_models.dart';
 
@@ -271,49 +272,26 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildStartButton() {
     var colorScheme = Theme.of(context).colorScheme;
-    return _buildButton(
+    return StandardButton(
       onPressed: _onSubmitPressed,
+      borderColor: colorScheme.primary,
       child: Text(
         "ČITAJ",
         style: TextStyle(fontSize: 40, color: colorScheme.primary),
       ),
-      borderColor: colorScheme.primary,
     );
   }
 
   Widget _buildContinueButton() {
     var colorScheme = Theme.of(context).colorScheme;
-    return _buildButton(
+    return StandardButton(
       onPressed: _onContinuePressed,
+      borderColor: colorScheme.tertiary,
+      borderWidth: 1,
       child: Text(
         "NASTAVI",
         style: TextStyle(fontSize: 25, color: colorScheme.tertiary),
       ),
-      borderColor: colorScheme.tertiary,
-      borderWidth: 1,
-    );
-  }
-
-  Widget _buildButton({
-    required VoidCallback onPressed,
-    required Widget child,
-    required Color borderColor,
-    double borderWidth = 2,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        ElevatedButton(
-          onPressed: onPressed,
-          style: TextButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              side: BorderSide(color: borderColor, width: borderWidth),
-            ),
-          ),
-          child: Padding(padding: const EdgeInsets.all(6), child: child),
-        ),
-      ],
     );
   }
 }

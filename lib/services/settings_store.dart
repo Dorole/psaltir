@@ -13,22 +13,15 @@ class SettingsStore {
 
   // #region THEME
   Future<void> saveThemeMode(ThemeMode mode) async {
-    final theme = switch (mode) {
-      ThemeMode.dark => "dark",
-      //ThemeMode.system => "system",
-      _ => "light",
-    };
-
-    await prefs.setString(_kThemeMode, theme);
+    await prefs.setString(_kThemeMode, mode.name);
   }
 
   ThemeMode loadThemeMode() {
-    final theme = prefs.getString(_kThemeMode);
-    return switch (theme) {
-      "dark" => ThemeMode.dark,
-      // "system" => ThemeMode.system,
-      _ => ThemeMode.light,
-    };
+    final loadedTheme = prefs.getString(_kThemeMode) ?? ThemeMode.system.name;
+    return ThemeMode.values.firstWhere(
+      (mode) => mode.name == loadedTheme,
+      orElse: () => ThemeMode.system,
+    );
   }
   // #endregion
 
@@ -52,7 +45,7 @@ class SettingsStore {
     );
   }
   // #endregion
-  
+
   Future<void> removeAll() async {
     await prefs.remove(_kTextScale);
     await prefs.remove(_kLineHeight);
